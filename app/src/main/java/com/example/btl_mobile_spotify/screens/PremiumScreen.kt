@@ -7,5 +7,5 @@ import com.example.btl_mobile_spotify.navigation.Router
 
 @Composable
 fun PremiumScreen(paddingValues: PaddingValues = PaddingValues()) {
-    Text(text = "Premium Screen")
+    SongFullScreen()
 }
