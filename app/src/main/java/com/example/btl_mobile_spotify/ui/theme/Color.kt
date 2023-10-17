@@ -28,3 +28,12 @@ val PremiumEnd = Color(0xFF00C48B)
 val ActiveBorder = Color(0xFF52FC59)
 val Notification = Color(0xFF2196F3)
 val White = Color(0xFFFFFFFF)
+
+
+val BackgroundColor = Color(0xFFE5E5E5)
+val AppBlackColor = Color(0xFF393F45)
+val AppFocusColor = Color(0xFFABB3BB)
+val AppUnFocusedColor = Color(0xFFD0D0D0)
+val AppBlueColor = Color(0xFF2945FF)
+val FacebookButtonColor = Color(0xFF298FFF)
+val GoogleButtonColor = Color(0xFFFC6A57)
