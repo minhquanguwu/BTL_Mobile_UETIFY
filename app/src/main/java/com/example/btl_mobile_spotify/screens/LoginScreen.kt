@@ -63,7 +63,7 @@ fun LoginScreen(navController: NavHostController){
                         .fillMaxWidth()
                 ) {
                     Button(
-                        onClick = {},
+                        onClick = {navController.navigate(Graph.ROOT)},
                         shape = CircleShape,
                         modifier = Modifier
                             .width(40.dp)

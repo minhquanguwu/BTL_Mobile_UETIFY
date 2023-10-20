@@ -23,6 +23,7 @@ import com.example.btl_mobile_spotify.navigation.Screen
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainScreen() {
+
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val route = navBackStackEntry?.destination?.route ?: Screen.Splash.route
