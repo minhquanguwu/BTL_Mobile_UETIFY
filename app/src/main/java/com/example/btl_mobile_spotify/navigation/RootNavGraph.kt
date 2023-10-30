@@ -27,8 +27,12 @@ import com.example.btl_mobile_spotify.screens.sign_in.StartScreen
 import com.google.android.gms.auth.api.identity.Identity
 import androidx.lifecycle.lifecycleScope
 import com.example.btl_mobile_spotify.screens.ProfileScreen
+import com.example.btl_mobile_spotify.screens.sign_in.signInWithFb
+import com.facebook.login.LoginManager
 import com.google.android.gms.common.api.Scope
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.core.ActivityScope
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 @Composable
@@ -97,7 +101,8 @@ fun RootNavigationGraph(navController: NavHostController, context: Context,
                             ).build()
                         )
                     }
-                }, navController = navController
+                },
+                navController = navController
             )
         }
         composable(route = "profile") {
@@ -111,7 +116,8 @@ fun RootNavigationGraph(navController: NavHostController, context: Context,
                             "Signed out",
                             Toast.LENGTH_LONG
                         ).show()
-
+                        Firebase.auth.signOut()
+                        LoginManager.getInstance().logOut()
                         navController.popBackStack()
                     }
                 }, navController

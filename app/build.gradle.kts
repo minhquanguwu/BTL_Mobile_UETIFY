@@ -91,4 +91,5 @@ dependencies {
     implementation ("io.coil-kt:coil-compose:2.2.2")
 
     implementation ("com.facebook.android:facebook-login:latest.release")
+    implementation ("com.facebook.android:facebook-android-sdk:latest.release")
 }

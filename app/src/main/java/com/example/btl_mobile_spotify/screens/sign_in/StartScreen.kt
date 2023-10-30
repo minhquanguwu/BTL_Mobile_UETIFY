@@ -1,5 +1,7 @@
 package com.example.btl_mobile_spotify.screens.sign_in
 
+import android.annotation.SuppressLint
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,8 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -34,11 +40,25 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.btl_mobile_spotify.navigation.AuthScreen
 import com.example.btl_mobile_spotify.navigation.Graph
 import com.example.btl_mobile_spotify.navigation.Router
 import com.example.btl_mobile_spotify.navigation.Screen
+import com.example.btl_mobile_spotify.ui.theme.Shapes
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.lang.RuntimeException
 
 @Composable
 fun StartScreen(navController: NavHostController,
@@ -140,35 +160,47 @@ fun StartScreen(navController: NavHostController,
                     )
                 }
                 Spacer(modifier = Modifier.height(12.dp))
-                Button(
-                    onClick = {
-                        navController.navigate(AuthScreen.SignUp.route)
-                    },
-                    modifier = Modifier
-                        .width(337.dp)
-                        .height(49.dp),
-                    shape = RoundedCornerShape(30.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF121212)),
-                    border = BorderStroke(1.dp, Color.White),
-                ) {
-                    Image(
-                        painterResource(id = R.drawable.ic_facebook),
-                        contentDescription ="google button icon",
-                        modifier = Modifier.size(20.dp))
-                    Text(
-                        text = "Continue with Facebook",
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontFamily = FontFamily.Serif,
-                            fontWeight = FontWeight(700),
-                            color = Color(0xFFF5F5F5),
-                            textAlign = TextAlign.Center,
-                        ),
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(49.dp), contentAlignment = Alignment.Center) {
+                    Button(
+                        onClick = {},
                         modifier = Modifier
                             .width(337.dp)
-                            .height(23.dp)
+                            .height(49.dp),
+                        shape = RoundedCornerShape(30.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF121212)),
+                        border = BorderStroke(1.dp, Color.White),
+                    ) {
+                        Image(
+                            painterResource(id = R.drawable.ic_facebook),
+                            contentDescription ="google button icon",
+                            modifier = Modifier.size(20.dp))
+                        Text(
+                            text = "Continue with Facebook",
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily.Serif,
+                                fontWeight = FontWeight(700),
+                                color = Color(0xFFF5F5F5),
+                                textAlign = TextAlign.Center,
+                            ),
+                            modifier = Modifier
+                                .width(337.dp)
+                                .height(23.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(49.dp));
+                    signInWithFb(
+                        onSignInFail = {
+                            Toast.makeText(context, "Try again", Toast.LENGTH_SHORT).show()
+                        },
+                        onSignedIn = {navController.navigate("profile")}
                     )
                 }
+
                 Spacer(modifier = Modifier.height(6.dp))
                 Button(
                     onClick = {
@@ -200,8 +232,51 @@ fun StartScreen(navController: NavHostController,
     }
 }
 
-//@Preview
-//@Composable
-//fun LoginScreen1Preview() {
-//    StartScreen(paddingValues = )
-//}
+@SuppressLint("ResourceAsColor")
+@Composable
+fun signInWithFb(
+    onSignInFail: (Exception) -> Unit,
+    onSignedIn: () ->Unit
+){
+    val scope = rememberCoroutineScope()
+    AndroidView({ context -> LoginButton(context).apply {
+        val callbackManager = CallbackManager.Factory.create()
+        setPermissions("email", "public_profile")
+
+        registerCallback(callbackManager, object  : FacebookCallback<LoginResult>{
+            override fun onCancel() {
+
+            }
+
+            override fun onError(error: FacebookException) {
+
+                onSignInFail(error)
+            }
+
+            override fun onSuccess(result: LoginResult) {
+                scope.launch {
+                    val token = result.accessToken.token
+                    val credential = FacebookAuthProvider.getCredential(token)
+                    val authResult = Firebase.auth.signInWithCredential(credential).await()
+                    if (authResult.user != null){
+                        onSignedIn()
+                    } else{
+                        onSignInFail(RuntimeException("Could not sign in with firebase"))
+                    }
+                }
+            }
+
+        })
+    }
+    },
+        Modifier
+            .width(337.dp)
+            .height(49.dp)
+            .alpha(0.0f))
+}
+
+@Preview
+@Composable
+fun LoginScreen1Preview() {
+    StartScreen(navController = rememberNavController(), signInClick = {}, state = SignInState())
+}
