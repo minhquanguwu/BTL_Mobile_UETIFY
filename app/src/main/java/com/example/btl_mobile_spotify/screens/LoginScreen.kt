@@ -1,5 +1,6 @@
 package com.example.btl_mobile_spotify.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import com.example.btl_mobile_spotify.R
@@ -28,6 +29,7 @@ import androidx.compose.material.TextField
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -37,11 +39,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.btl_mobile_spotify.navigation.Graph
+import com.example.btl_mobile_spotify.screens.sign_in.native_method.NativeLoginUIEvent
+import com.example.btl_mobile_spotify.screens.sign_in.native_method.NativeLoginViewModel
 
 @Composable
-fun LoginScreen(navController: NavHostController){
-    var username by remember { mutableStateOf(TextFieldValue("")) }
-    var password by remember { mutableStateOf(TextFieldValue("")) }
+fun LoginScreen(navController: NavHostController,
+                nativeLoginViewModel: NativeLoginViewModel){
+    var username by remember { mutableStateOf(("")) }
+    var password by remember { mutableStateOf(("")) }
+    val context = LocalContext.current
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
             Modifier
@@ -108,6 +114,7 @@ fun LoginScreen(navController: NavHostController){
                     value = username,
                     onValueChange = {
                         username = it
+                        nativeLoginViewModel.onEvent(NativeLoginUIEvent.EmailChanged(it))
                     },
                     //label = { Text(text = "Email or Username") },
                     placeholder = {
@@ -143,6 +150,7 @@ fun LoginScreen(navController: NavHostController){
                     value = password,
                     onValueChange = {
                         password = it
+                        nativeLoginViewModel.onEvent(NativeLoginUIEvent.PasswordChanged(it))
                     },
                     placeholder = {
                         Text(text = "Password",
@@ -160,7 +168,9 @@ fun LoginScreen(navController: NavHostController){
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Button(
-                    onClick = {navController.navigate(Graph.CONTENT)},
+                    onClick ={
+                              nativeLoginViewModel.onEvent(NativeLoginUIEvent.LoginButtonClicked)
+                             },
                     modifier = Modifier
                         .width(150.dp)
                         .height(49.dp).align(CenterHorizontally),

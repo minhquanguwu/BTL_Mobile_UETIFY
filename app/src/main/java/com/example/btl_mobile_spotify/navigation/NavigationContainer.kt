@@ -20,12 +20,12 @@ fun NavigationContainer(
     navController: NavHostController,
     paddingValues: PaddingValues,
 ) {
-    val startDestination = remember { mutableStateOf(Screen.Splash.route) }
-    LaunchedEffect(startDestination) {
-        if (startDestination.value == Screen.Home.route) {
-            router.goHome()
-        }
-    }
+    val startDestination = remember { mutableStateOf(Screen.Home.route) }
+//    LaunchedEffect(startDestination) {
+//        if (startDestination.value == Screen.Home.route) {
+//            router.goHome()
+//        }
+//    }
     NavHost(navController = navController, startDestination = startDestination.value) {
         composable(Screen.Home.route) {
             HomeScreen(paddingValues, router)

@@ -26,7 +26,7 @@ fun MainScreen() {
 
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val route = navBackStackEntry?.destination?.route ?: Screen.Splash.route
+    val route = navBackStackEntry?.destination?.route ?: Screen.Home.route
     val router: Router = remember { RouterImpl(navController, route) }
     val isFullScreen = false;
     Scaffold(

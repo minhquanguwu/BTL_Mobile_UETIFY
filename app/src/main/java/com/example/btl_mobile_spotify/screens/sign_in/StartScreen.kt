@@ -1,7 +1,6 @@
 package com.example.btl_mobile_spotify.screens.sign_in
 
 import android.annotation.SuppressLint
-import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -9,7 +8,6 @@ import com.example.btl_mobile_spotify.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,11 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -43,11 +39,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.btl_mobile_spotify.navigation.AuthScreen
 import com.example.btl_mobile_spotify.navigation.Graph
-import com.example.btl_mobile_spotify.navigation.Router
-import com.example.btl_mobile_spotify.navigation.Screen
-import com.example.btl_mobile_spotify.ui.theme.Shapes
+import com.example.btl_mobile_spotify.screens.sign_in.additional_method.AdditionalSignInState
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -63,7 +56,8 @@ import java.lang.RuntimeException
 @Composable
 fun StartScreen(navController: NavHostController,
                 signInClick: () -> Unit,
-                state: SignInState) {
+                state: AdditionalSignInState
+) {
     val context = LocalContext.current
     LaunchedEffect(key1 = state.signInError) {
         state.signInError?.let { error ->
@@ -78,7 +72,7 @@ fun StartScreen(navController: NavHostController,
         Box(
             Modifier
                 .width(428.dp)
-                .height(926.dp)
+                .height(866.dp)
                 .background(color = Color(0xFF121212))
         ) {
             Column(
@@ -94,13 +88,13 @@ fun StartScreen(navController: NavHostController,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .width(428.dp)
-                        .height(465.dp)
+                        .height(400.dp)
                 )
                 Text(
                     modifier = Modifier
                         .width(246.dp)
                         .height(84.dp),
-                    text = "Millions of Songs.\nFree on Spotify.",
+                    text = "Millions of Songs.\nFree on Uetify.",
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontFamily = FontFamily.Serif,
@@ -110,7 +104,8 @@ fun StartScreen(navController: NavHostController,
                     )
                 )
                 Button(
-                    onClick = {},
+                    onClick = {navController.popBackStack()
+                        navController.navigate(Graph.AUTHENTICATION)},
                     modifier = Modifier
                         .width(337.dp)
                         .height(49.dp),
@@ -278,5 +273,5 @@ fun signInWithFb(
 @Preview
 @Composable
 fun LoginScreen1Preview() {
-    StartScreen(navController = rememberNavController(), signInClick = {}, state = SignInState())
+    StartScreen(navController = rememberNavController(), signInClick = {}, state = AdditionalSignInState())
 }

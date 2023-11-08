@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.btl_mobile_spotify.screens.loginTest
 import com.example.btl_mobile_spotify.screens.LoginScreen
+import com.example.btl_mobile_spotify.screens.sign_in.native_method.NativeLoginViewModel
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
     navigation(
@@ -13,7 +14,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
         startDestination = AuthScreen.Login.route
     ) {
         composable(route = AuthScreen.Login.route) {
-            LoginScreen(navController)
+            LoginScreen(navController, NativeLoginViewModel(navController))
         }
         composable(route = AuthScreen.SignUp.route) {
             loginTest()
