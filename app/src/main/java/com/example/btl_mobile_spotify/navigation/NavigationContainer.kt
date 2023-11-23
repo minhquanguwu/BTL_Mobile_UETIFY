@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.btl_mobile_spotify.screens.HomeScreen
+import com.example.btl_mobile_spotify.screens.homescreen.HomeScreen
 import com.example.btl_mobile_spotify.screens.LibsScreen
 import com.example.btl_mobile_spotify.screens.PremiumScreen
 import com.example.btl_mobile_spotify.screens.SearchScreen

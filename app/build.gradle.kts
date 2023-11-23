@@ -1,6 +1,10 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
+    id("com.google.gms.google-services")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -47,6 +51,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    kotlin {
+        jvmToolchain(8)
+    }
 }
 
 dependencies {
@@ -59,6 +66,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material:material")
+    implementation("com.google.firebase:firebase-firestore:24.9.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -67,9 +75,43 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    // compose navigation
     val nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
     //coil
     implementation("io.coil-kt:coil-compose:1.4.0")
 
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    kapt ("com.github.bumptech.glide:compiler:4.12.0")
+
+    //hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0-rc01")
+
+    //timber
+    implementation ("com.jakewharton.timber:timber:5.0.1")
+
+    //exo player
+    val exoplayer_version = "2.16.1"
+    implementation ("com.google.android.exoplayer:exoplayer-core:$exoplayer_version")
+    implementation ("com.google.android.exoplayer:exoplayer-ui:$exoplayer_version")
+    implementation ("com.google.android.exoplayer:exoplayer-dash:$exoplayer_version")
+    implementation ("com.google.android.exoplayer:exoplayer-smoothstreaming:$exoplayer_version")
+    implementation ("com.google.android.exoplayer:extension-mediasession:$exoplayer_version")
+
+    //room
+    val room_version = "2.5.1"
+    implementation ("androidx.room:room-ktx:$room_version")
+    implementation("androidx.room:room-runtime:$room_version")
+//    kapt("androidx.room:room-compiler:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+
+    //retrofit
+    val retrofit_version = "2.9.0"
+    implementation ("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation ("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.2.1")
 }
