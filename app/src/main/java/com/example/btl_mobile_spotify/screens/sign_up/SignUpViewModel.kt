@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.example.btl_mobile_spotify.screens.sign_up.SignUpUIState
 import com.example.btl_mobile_spotify.screens.sign_in.rules.Validator
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class SignUpViewModel(private val navController: NavController) : ViewModel() {
@@ -57,6 +58,7 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
 //                    privacyPolicyAccepted = event.status
 //                )
 //            }
+            else -> {}
         }
         validateDataWithRules()
     }
@@ -128,6 +130,10 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
 
                 signUpInProgress.value = false
                 if (it.isSuccessful) {
+                    val userId = FirebaseAuth.getInstance().currentUser?.uid
+                    userId?.let {
+                        createUserFirestore(it, signUpUIState.value.fullname, email, password)
+                    }
                     navController.navigate("profile")
                     isSignedUpFail.value = false
                 }
@@ -137,6 +143,28 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
                 Log.d(TAG, "Exception= ${it.message}")
                 Log.d(TAG, "Exception= ${it.localizedMessage}")
                 isSignedUpFail.value = true
+            }
+    }
+    private fun createUserFirestore(userId: String, fullname: String, email: String, password: String) {
+        val db = FirebaseFirestore.getInstance()
+
+        val user = hashMapOf(
+            "userId" to userId,
+            "fullname" to fullname,
+            "email" to email,
+            "password" to password
+            // Add more fields if needed
+        )
+
+        db.collection("users").document(fullname)
+            .set(user)
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG, "DocumentSnapshot added with ID: $fullname")
+                // You can perform additional actions after successfully adding the user to Firestore
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+                // Handle the error appropriately
             }
     }
 
