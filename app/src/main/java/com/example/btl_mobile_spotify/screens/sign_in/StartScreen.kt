@@ -105,7 +105,7 @@ fun StartScreen(navController: NavHostController,
                 )
                 Button(
                     onClick = {navController.popBackStack()
-                        navController.navigate(Graph.AUTHENTICATION)},
+                        navController.navigate("SIGN_UP")},
                     modifier = Modifier
                         .width(337.dp)
                         .height(49.dp),

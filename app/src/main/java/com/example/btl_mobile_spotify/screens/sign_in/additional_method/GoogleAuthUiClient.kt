@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import com.example.btl_mobile_spotify.R
-import com.example.btl_mobile_spotify.screens.sign_in.SignInResult
-import com.example.btl_mobile_spotify.screens.sign_in.UserData
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
 import com.google.android.gms.auth.api.identity.SignInClient

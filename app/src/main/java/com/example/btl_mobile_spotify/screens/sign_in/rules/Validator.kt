@@ -3,16 +3,9 @@ package com.example.btl_mobile_spotify.screens.sign_in.rules
 object Validator {
 
 
-    fun validateFirstName(fName: String): ValidationResult {
+    fun validateFullName(fName: String): ValidationResult {
         return ValidationResult(
             (!fName.isNullOrEmpty() && fName.length >= 2)
-        )
-
-    }
-
-    fun validateLastName(lName: String): ValidationResult {
-        return ValidationResult(
-            (!lName.isNullOrEmpty() && lName.length >= 2)
         )
     }
 

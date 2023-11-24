@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.btl_mobile_spotify.navigation.Graph
-import com.example.btl_mobile_spotify.screens.sign_in.UserData
+import com.example.btl_mobile_spotify.screens.sign_in.additional_method.UserData
 
 @Composable
 fun ProfileScreen(

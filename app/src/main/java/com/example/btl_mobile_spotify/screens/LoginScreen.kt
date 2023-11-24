@@ -167,6 +167,22 @@ fun LoginScreen(navController: NavHostController,
                             shape = RoundedCornerShape(size = 5.dp))
                 )
                 Spacer(modifier = Modifier.height(24.dp))
+
+                if (nativeLoginViewModel.isSignedInFail.value == true) {
+                    Text(
+                        text = "Invalid email or password",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily.Serif,
+                            fontWeight = FontWeight(700),
+                            color = Color.Red,
+                            textAlign = TextAlign.Start,
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 31.dp)
+                    )
+                }
                 Button(
                     onClick ={
                               nativeLoginViewModel.onEvent(NativeLoginUIEvent.LoginButtonClicked)

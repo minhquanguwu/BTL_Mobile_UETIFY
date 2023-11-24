@@ -1,7 +1,6 @@
 package com.example.btl_mobile_spotify.screens.sign_in.additional_method
 
 import androidx.lifecycle.ViewModel
-import com.example.btl_mobile_spotify.screens.sign_in.SignInResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

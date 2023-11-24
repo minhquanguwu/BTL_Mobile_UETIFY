@@ -6,6 +6,6 @@ sealed class NativeLoginUIEvent{
 
     data class EmailChanged(val email: String): NativeLoginUIEvent()
     data class PasswordChanged(val password: String) : NativeLoginUIEvent()
-
+    data class SignInSuccessfull(val isSignedIn: Boolean): NativeLoginUIEvent()
     object LoginButtonClicked : NativeLoginUIEvent()
 }

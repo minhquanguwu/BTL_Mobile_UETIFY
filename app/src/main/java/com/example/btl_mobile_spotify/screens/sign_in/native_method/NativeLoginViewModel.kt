@@ -19,7 +19,7 @@ class NativeLoginViewModel(private val navController: NavController) : ViewModel
     var allValidationsPassed = mutableStateOf(false)
 
     var loginInProgress = mutableStateOf(false)
-
+    var isSignedInFail = mutableStateOf(false)
     fun onEvent(event: NativeLoginUIEvent) {
         when (event) {
             is NativeLoginUIEvent.EmailChanged -> {
@@ -36,6 +36,10 @@ class NativeLoginViewModel(private val navController: NavController) : ViewModel
 
             is NativeLoginUIEvent.LoginButtonClicked -> {
                 login()
+            }
+
+            is NativeLoginUIEvent.SignInSuccessfull -> {
+
             }
         }
         validateLoginUIDataWithRules()
@@ -71,19 +75,17 @@ class NativeLoginViewModel(private val navController: NavController) : ViewModel
             .addOnCompleteListener {
                 Log.d(TAG,"Inside_login_success")
                 Log.d(TAG,"${it.isSuccessful}")
-
                 if(it.isSuccessful){
-
                     loginInProgress.value = false
                     navController.navigate("profile")
+                    isSignedInFail.value = false
                 }
             }
             .addOnFailureListener {
                 Log.d(TAG,"Inside_login_failure")
                 Log.d(TAG,"${it.localizedMessage}")
-
                 loginInProgress.value = false
-
+                isSignedInFail.value = true
             }
 
     }
