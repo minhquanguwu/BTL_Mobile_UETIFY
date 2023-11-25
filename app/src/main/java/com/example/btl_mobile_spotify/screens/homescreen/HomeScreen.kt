@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.btl_mobile_spotify.R
 import com.example.btl_mobile_spotify.components.IconBtn
 import com.example.btl_mobile_spotify.components.MusicBottomBar
@@ -37,15 +38,15 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Composable
-fun HomeScreen(paddingValues: PaddingValues = PaddingValues(), router: Router? = null,
-               viewModel: HomeViewModel = hiltViewModel(),) {
+fun HomeScreen(paddingValues: PaddingValues = PaddingValues(), router: Router? = null, viewModel: HomeViewModel = hiltViewModel(),
+) {
     val uiState by viewModel.uiState
     val musicList : List<Music> = uiState.musicList
     Log.d("Song","${musicList.size}")
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
-            TopAppBar(modifier = Modifier.padding(top = 4.dp, bottom = 8.dp))
+            TopAppBar(modifier = Modifier.padding(top = 4.dp, bottom = 8.dp), onActionClicked = {router?.goProfileScreen(null)})
             val scrollState = rememberLazyListState()
             LazyColumn(
                 state = scrollState
@@ -80,8 +81,8 @@ fun HomeScreen(paddingValues: PaddingValues = PaddingValues(), router: Router? =
 
 }
 
-@Preview (showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen()
-}
+//@Preview (showBackground = true)
+//@Composable
+//fun HomeScreenPreview() {
+//    HomeScreen()
+//}

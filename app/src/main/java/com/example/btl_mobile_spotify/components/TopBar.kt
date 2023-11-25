@@ -2,19 +2,25 @@ package com.example.btl_mobile_spotify.components
 
 import Sizes.DEFAULT
 import Sizes.SMALL
-import androidx.compose.foundation.layout.Box
+import android.util.Log
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.btl_mobile_spotify.R
+import com.example.btl_mobile_spotify.navigation.Router
+import com.example.btl_mobile_spotify.navigation.Screen
 
 @Composable
 fun TopBar(
@@ -55,7 +61,8 @@ fun TopBarPreview() {
 fun TopAppBar(
     modifier: Modifier = Modifier,
     title: String = "Latest Tracks",
-    onActionClicked: (pos: Int) -> Unit = {},
+    onActionClicked: ()  -> Unit,
+
 ) {
     Row(
         modifier = modifier
@@ -69,18 +76,20 @@ fun TopAppBar(
                 .weight(1f),
             text = title,
         )
-
+//        Button(onClick = { navController.navigate(Screen.Profile.route) }) {
+//            Text(text = "CLICK")
+//        }
         IconBtn(resIcon = R.drawable.ic_history) {
-            onActionClicked(1)
+//            onActionClicked()
         }
         IconBtn(resIcon = R.drawable.ic_settings) {
-            onActionClicked(2)
+            onActionClicked()
         }
     }
 }
 
-@Preview
-@Composable
-fun TopAppBarPreview() {
-    TopAppBar()
-}
+//@Preview
+//@Composable
+//fun TopAppBarPreview() {
+//    TopAppBar()
+//}

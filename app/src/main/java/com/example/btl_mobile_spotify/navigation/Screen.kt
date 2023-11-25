@@ -17,10 +17,19 @@ object Routes {
     const val ROUTE_PREMIUM = "ROUTE_PREMIUM"
     const val ROUTE_SPLASH = "ROUTE_SPLASH"
     const val ROUTE_PLAYER_FULL = "ROUTE_PLAYER_FULL"
+    const val ROUTE_INFO = "ROUTE_INFO"
+    const val ROUTE_LOGIN = "ROUTE_LOGIN"
+    const val ROUTE_SIGNUP = "ROUTE_SIGNUP"
+    const val ROUTE_START = "ROUTE_START"
 
     val fullScreenRoutes = listOf(
         ROUTE_SPLASH,
-        ROUTE_PLAYER_FULL
+        ROUTE_PLAYER_FULL,
+        ROUTE_START,
+        ROUTE_LOGIN,
+        ROUTE_SIGNUP,
+        ROUTE_INFO
+
     )
 }
 
@@ -32,12 +41,15 @@ sealed class Screen(
 ) {
     object Home : Screen(route = ROUTE_HOME, title = "Home", icon = R.drawable.ic_home_filled)
     object Search : Screen(route = ROUTE_SEARCH, title = "Search", icon = R.drawable.ic_search_big)
-    object Libs :
-        Screen(route = ROUTE_LIBS, title = "Your Library", icon = R.drawable.ic_library_big)
+    object Libs : Screen(route = ROUTE_LIBS, title = "Your Library", icon = R.drawable.ic_library_big)
 
     object Premium : Screen(route = ROUTE_PREMIUM, title = "Premium", icon = R.drawable.ic_premium)
     object Splash : Screen(route = ROUTE_SPLASH)
     object PlayerFull : Screen(route = ROUTE_PLAYER_FULL)
+    object Profile : Screen(route = Routes.ROUTE_INFO)
+    object Login : Screen(route = Routes.ROUTE_LOGIN)
+    object SignUp : Screen(route = Routes.ROUTE_SIGNUP)
+    object Start : Screen(route = Routes.ROUTE_START)
 
     companion object {
         fun isFullScreen(route: String?): Boolean {
