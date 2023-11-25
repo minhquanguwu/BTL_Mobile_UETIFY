@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
     private val _uiState = mutableStateOf(HomeScreenState())
     val uiState: State<HomeScreenState> = _uiState
 
-    private val _navigateToMusicScreen = MutableSharedFlow<Boolean>()
+    private val   _navigateToMusicScreen = MutableSharedFlow<Boolean>()
     val navigateToMusicScreen = _navigateToMusicScreen.asSharedFlow()
 
     private val searchQuery = MutableStateFlow("")
@@ -42,7 +42,7 @@ class HomeViewModel @Inject constructor(
     private val playBackState = musicUseCase.playbackState
 
     init {
-//        sampleMusicList.subList(6, sampleMusicList.size).forEach {
+//        sampleMusicList.subList(0, sampleMusicList.size).forEach {
 //            uploadMusic(it)
 //        }
         collectSongs()

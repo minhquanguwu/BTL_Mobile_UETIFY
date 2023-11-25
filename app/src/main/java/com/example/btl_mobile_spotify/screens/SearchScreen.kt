@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.example.btl_mobile_spotify.navigation.Router
+import com.example.btl_mobile_spotify.screens.playerfullscreen.MusicPlayerScreen
 
 @Composable
 fun SearchScreen(paddingValues: PaddingValues = PaddingValues()) {
