@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.btl_mobile_spotify.navigation.Graph
+import com.example.btl_mobile_spotify.navigation.Screen
 import com.example.btl_mobile_spotify.screens.sign_in.native_method.NativeLoginUIEvent
 import com.example.btl_mobile_spotify.screens.sign_in.native_method.NativeLoginViewModel
 import com.example.btl_mobile_spotify.screens.sign_up.SignUpUIEvent
@@ -50,8 +51,10 @@ import com.example.btl_mobile_spotify.screens.sign_up.SignUpViewModel
 
 @Composable
 fun SignUpScreen(navController: NavHostController,
-                signUpViewModel: SignUpViewModel
+                signUpViewModel: SignUpViewModel,
+                 onToggleBottomBar: (Boolean) -> Unit
 ){
+    onToggleBottomBar(false)
     var name by remember { mutableStateOf(("")) }
     var email by remember { mutableStateOf(("")) }
     var password by remember { mutableStateOf(("")) }
@@ -78,7 +81,7 @@ fun SignUpScreen(navController: NavHostController,
                 ) {
                     Button(
                         onClick = {
-                            navController.navigate(Graph.ROOT)
+                            navController.navigate(Screen.Start.route)
                                   },
                         shape = CircleShape,
                         modifier = Modifier

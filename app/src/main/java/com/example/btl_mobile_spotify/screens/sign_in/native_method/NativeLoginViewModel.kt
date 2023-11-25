@@ -1,16 +1,16 @@
 package com.example.btl_mobile_spotify.screens.sign_in.native_method
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.btl_mobile_spotify.navigation.Graph
+import com.example.btl_mobile_spotify.navigation.Screen
 import com.example.btl_mobile_spotify.screens.sign_in.rules.Validator
+import com.example.btl_mobile_spotify.screens.user_data.UserInfo
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class NativeLoginViewModel(private val navController: NavController) : ViewModel(){
     private val TAG = NativeLoginUIEvent::class.simpleName
@@ -77,7 +77,7 @@ class NativeLoginViewModel(private val navController: NavController) : ViewModel
                 Log.d(TAG,"${it.isSuccessful}")
                 if(it.isSuccessful){
                     loginInProgress.value = false
-                    navController.navigate("profile")
+                    navController.navigate(Screen.Home.route)
                     isSignedInFail.value = false
                 }
             }
@@ -87,6 +87,13 @@ class NativeLoginViewModel(private val navController: NavController) : ViewModel
                 loginInProgress.value = false
                 isSignedInFail.value = true
             }
+    }
+    fun getSignedInUser(): UserInfo? = Firebase.auth.currentUser?.run {
+        UserInfo(
+            userId = uid,
+            username = displayName,
+            email = email?.toString()
+        )
 
     }
 }

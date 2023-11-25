@@ -50,7 +50,7 @@ fun NavigationBar(
                     )
                 },
                 selectedContentColor = Color.White,
-                unselectedContentColor = Color.White.copy(0.4f),
+                unselectedContentColor = Color.White.copy(0.4f),  
                 selected = selected,
                 onClick = { onRouteSelected(targetRoute) }
             )

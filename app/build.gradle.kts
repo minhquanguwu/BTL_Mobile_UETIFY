@@ -2,6 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -39,11 +42,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -92,4 +95,37 @@ dependencies {
 
     implementation ("com.facebook.android:facebook-login:latest.release")
     implementation ("com.facebook.android:facebook-android-sdk:latest.release")
+
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    kapt ("com.github.bumptech.glide:compiler:4.12.0")
+
+    //hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0-rc01")
+
+    //timber
+    implementation ("com.jakewharton.timber:timber:5.0.1")
+
+    //exo player
+    val exoplayer_version = "2.16.1"
+    implementation ("com.google.android.exoplayer:exoplayer-core:$exoplayer_version")
+    implementation ("com.google.android.exoplayer:exoplayer-ui:$exoplayer_version")
+    implementation ("com.google.android.exoplayer:exoplayer-dash:$exoplayer_version")
+    implementation ("com.google.android.exoplayer:exoplayer-smoothstreaming:$exoplayer_version")
+    implementation ("com.google.android.exoplayer:extension-mediasession:$exoplayer_version")
+
+    //room
+    val room_version = "2.5.1"
+    implementation ("androidx.room:room-ktx:$room_version")
+    implementation("androidx.room:room-runtime:$room_version")
+//    kapt("androidx.room:room-compiler:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+
+    //retrofit
+    val retrofit_version = "2.9.0"
+    implementation ("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation ("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.2.1")
 }

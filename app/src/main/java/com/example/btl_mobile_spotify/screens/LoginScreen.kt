@@ -39,15 +39,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.btl_mobile_spotify.navigation.Graph
+import com.example.btl_mobile_spotify.navigation.Screen
 import com.example.btl_mobile_spotify.screens.sign_in.native_method.NativeLoginUIEvent
 import com.example.btl_mobile_spotify.screens.sign_in.native_method.NativeLoginViewModel
 
 @Composable
 fun LoginScreen(navController: NavHostController,
-                nativeLoginViewModel: NativeLoginViewModel){
+                nativeLoginViewModel: NativeLoginViewModel, onToggleBottomBar: (Boolean) -> Unit){
     var username by remember { mutableStateOf(("")) }
     var password by remember { mutableStateOf(("")) }
     val context = LocalContext.current
+    onToggleBottomBar(false)
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
             Modifier
@@ -69,7 +71,7 @@ fun LoginScreen(navController: NavHostController,
                         .fillMaxWidth()
                 ) {
                     Button(
-                        onClick = {navController.navigate(Graph.ROOT)},
+                        onClick = {navController.navigate(Screen.Start.route)},
                         shape = CircleShape,
                         modifier = Modifier
                             .width(40.dp)

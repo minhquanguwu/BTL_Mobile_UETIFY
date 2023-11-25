@@ -3,11 +3,15 @@ package com.example.btl_mobile_spotify.navigation
 import androidx.annotation.DrawableRes
 import com.example.btl_mobile_spotify.R
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_HOME
+import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_INFO
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_LIBS
+import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_LOGIN
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_PREMIUM
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_SEARCH
+import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_SIGNUP
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_SONG_FULL
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_SPLASH
+import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_START
 
 object Routes {
     const val ROUTE_HOME = "ROUTE_HOME"
@@ -16,6 +20,10 @@ object Routes {
     const val ROUTE_PREMIUM = "ROUTE_PREMIUM"
     const val ROUTE_SPLASH = "ROUTE_SPLASH"
     const val ROUTE_SONG_FULL = "ROUTE_SONG_FULL"
+    const val ROUTE_INFO = "ROUTE_INFO"
+    const val ROUTE_LOGIN = "ROUTE_LOGIN"
+    const val ROUTE_SIGNUP = "ROUTE_SIGNUP"
+    const val ROUTE_START = "ROUTE_START"
 }
 
 sealed class Screen(
@@ -34,5 +42,8 @@ sealed class Screen(
 
     object PlayerFull : Screen(route = ROUTE_SONG_FULL)
 
-
+    object Profile : Screen(route = ROUTE_INFO)
+    object Login : Screen(route = ROUTE_LOGIN)
+    object SignUp : Screen(route = ROUTE_SIGNUP)
+    object Start : Screen(route = ROUTE_START)
 }

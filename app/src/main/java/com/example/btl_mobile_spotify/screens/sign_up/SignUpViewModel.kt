@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.example.btl_mobile_spotify.navigation.Graph
+import com.example.btl_mobile_spotify.navigation.Screen
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.example.btl_mobile_spotify.screens.sign_up.SignUpUIState
@@ -134,7 +136,7 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
                     userId?.let {
                         createUserFirestore(it, signUpUIState.value.fullname, email, password)
                     }
-                    navController.navigate("profile")
+                    navController.navigate(Screen.Home.route)
                     isSignedUpFail.value = false
                 }
             }
@@ -156,7 +158,7 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
             // Add more fields if needed
         )
 
-        db.collection("users").document(fullname)
+        db.collection("users").document(userId)
             .set(user)
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG, "DocumentSnapshot added with ID: $fullname")

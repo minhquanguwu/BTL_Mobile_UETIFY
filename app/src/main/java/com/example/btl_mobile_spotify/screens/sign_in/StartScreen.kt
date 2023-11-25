@@ -40,6 +40,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.btl_mobile_spotify.navigation.Graph
+import com.example.btl_mobile_spotify.navigation.Screen
+import com.example.btl_mobile_spotify.screens.MainScreen
 import com.example.btl_mobile_spotify.screens.sign_in.additional_method.AdditionalSignInState
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -56,9 +58,12 @@ import java.lang.RuntimeException
 @Composable
 fun StartScreen(navController: NavHostController,
                 signInClick: () -> Unit,
-                state: AdditionalSignInState
+                state: AdditionalSignInState,
+                onToggleBottomBar: (Boolean) -> Unit
 ) {
+    onToggleBottomBar(false)
     val context = LocalContext.current
+
     LaunchedEffect(key1 = state.signInError) {
         state.signInError?.let { error ->
             Toast.makeText(
@@ -105,7 +110,7 @@ fun StartScreen(navController: NavHostController,
                 )
                 Button(
                     onClick = {navController.popBackStack()
-                        navController.navigate("SIGN_UP")},
+                        navController.navigate(Screen.SignUp.route)},
                     modifier = Modifier
                         .width(337.dp)
                         .height(49.dp),
@@ -192,7 +197,7 @@ fun StartScreen(navController: NavHostController,
                         onSignInFail = {
                             Toast.makeText(context, "Try again", Toast.LENGTH_SHORT).show()
                         },
-                        onSignedIn = {navController.navigate("profile")}
+                        onSignedIn = {navController.navigate(Screen.Home.route)}
                     )
                 }
 
@@ -200,7 +205,7 @@ fun StartScreen(navController: NavHostController,
                 Button(
                     onClick = {
                         navController.popBackStack()
-                        navController.navigate(Graph.AUTHENTICATION)
+                        navController.navigate(Screen.Login.route)
                     },
                     modifier = Modifier
                         .width(100.dp)
@@ -270,8 +275,8 @@ fun signInWithFb(
             .alpha(0.0f))
 }
 
-@Preview
-@Composable
-fun LoginScreen1Preview() {
-    StartScreen(navController = rememberNavController(), signInClick = {}, state = AdditionalSignInState())
-}
+//@Preview
+//@Composable
+//fun LoginScreen1Preview() {
+//    StartScreen(navController = rememberNavController(), signInClick = {}, state = AdditionalSignInState())
+//}

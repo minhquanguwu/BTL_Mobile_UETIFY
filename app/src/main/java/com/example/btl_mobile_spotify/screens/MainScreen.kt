@@ -1,5 +1,6 @@
 package com.example.btl_mobile_spotify.screens
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -8,11 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.btl_mobile_spotify.components.NavigationBar
 import com.example.btl_mobile_spotify.navigation.NavigationContainer
 import com.example.btl_mobile_spotify.navigation.Router
@@ -22,16 +22,18 @@ import com.example.btl_mobile_spotify.navigation.Screen
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavHostController, context: Context,
+               lifecycleScope: LifecycleCoroutineScope, isBottomBarVisible: Boolean, onToggleBottomBar: (Boolean) -> Unit
+) {
 
-    val navController = rememberNavController()
+//    val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val route = navBackStackEntry?.destination?.route ?: Screen.Home.route
+    val route = navBackStackEntry?.destination?.route ?: Screen.Splash.route
     val router: Router = remember { RouterImpl(navController, route) }
-    val isFullScreen = false;
+    val isFullScreen = true;
     Scaffold(
         bottomBar = {
-            if (!isFullScreen) {
+            if (isBottomBarVisible) {
                 Column(
                     modifier = Modifier
                         .padding(top = 20.dp)
@@ -53,12 +55,13 @@ fun MainScreen() {
             }
         }
     ) {
-        NavigationContainer(router = router, navController = navController, paddingValues = it)
+        NavigationContainer(router = router, navController = navController, paddingValues = it,
+            context = context, lifecycleScope = lifecycleScope, onToggleBottomBar)
     }
 }
 
-@Preview
-@Composable
-fun PreviewMain() {
-    MainScreen()
-}
+//@Preview
+//@Composable
+//fun PreviewMain() {
+//    MainScreen()
+//}
