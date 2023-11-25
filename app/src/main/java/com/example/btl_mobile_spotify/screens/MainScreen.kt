@@ -18,6 +18,8 @@ import com.example.btl_mobile_spotify.navigation.NavigationContainer
 import com.example.btl_mobile_spotify.navigation.Router
 import com.example.btl_mobile_spotify.navigation.RouterImpl
 import com.example.btl_mobile_spotify.navigation.Screen
+import com.example.btl_mobile_spotify.utils.Ext
+import com.example.btl_mobile_spotify.utils.Ext.gradient
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -27,14 +29,24 @@ fun MainScreen() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val route = navBackStackEntry?.destination?.route ?: Screen.Splash.route
     val router: Router = remember { RouterImpl(navController, route) }
-    val isFullScreen = false;
+    val isFullScreen = Screen.isFullScreen(route);
     Scaffold(
         bottomBar = {
             if (!isFullScreen) {
                 Column(
                     modifier = Modifier
+                        .gradient(
+                            listOf(Color.Transparent, Color.Black),
+                            Ext.GradientType.VERTICAL
+                        )
                         .padding(top = 20.dp)
                 ) {
+//                    PlayerSmall(
+//                        modifier = Modifier
+//                            .clickableResize {
+//                                router.goPlayerFull(null)
+//                            }
+//                    )
                     NavigationBar(route) { target ->
                         navController.apply {
                             navigate(target) {

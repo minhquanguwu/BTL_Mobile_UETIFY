@@ -1,10 +1,13 @@
 package com.example.btl_mobile_spotify.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
@@ -21,11 +24,8 @@ fun ImageCrop(
 ) {
     val painter = rememberImagePainter(
         data = data,
-        builder = {
-            transformations(CircleCropTransformation())
-        }
-    )
 
+    )
     Image(
         painter = painter,
         contentDescription = null,

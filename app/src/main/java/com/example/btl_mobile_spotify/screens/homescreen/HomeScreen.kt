@@ -51,7 +51,7 @@ fun HomeScreen(paddingValues: PaddingValues = PaddingValues(), router: Router? =
                 state = scrollState
             ){
                 items(musicList) { music ->
-                    MusicItem(music = music, onItemClick = {viewModel.onMusicListItemPressed(it)})
+                    MusicItem(music = music, onItemClick = {viewModel.onMusicListItemPressed(it); })
                 }
             }
         }
@@ -72,7 +72,7 @@ fun HomeScreen(paddingValues: PaddingValues = PaddingValues(), router: Router? =
                     .fillMaxWidth()
                     .height(64.dp),
                 onPlayPauseButtonPressed = viewModel::onPlayPauseButtonPressed,
-                onItemClick = viewModel::onMusicBottomBarPressed
+                onItemClick = {router?.goPlayerFull(null)}
             )
         }
 

@@ -13,6 +13,7 @@ import com.example.btl_mobile_spotify.screens.homescreen.HomeScreen
 import com.example.btl_mobile_spotify.screens.PremiumScreen
 import com.example.btl_mobile_spotify.screens.SearchScreen
 import com.example.btl_mobile_spotify.screens.SplashScreen
+import com.example.btl_mobile_spotify.screens.playerfullscreen.MusicPlayerScreen
 
 
 @Composable
@@ -46,6 +47,9 @@ fun NavigationContainer(
                     startDestination.value = Screen.Home.route
                 }
             )
+        }
+        composable(Screen.PlayerFull.route) {
+            MusicPlayerScreen()
         }
     }
 

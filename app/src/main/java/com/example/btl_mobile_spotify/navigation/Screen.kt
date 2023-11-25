@@ -4,10 +4,11 @@ import androidx.annotation.DrawableRes
 import com.example.btl_mobile_spotify.R
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_HOME
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_LIBS
+import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_PLAYER_FULL
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_PREMIUM
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_SEARCH
-import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_SONG_FULL
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_SPLASH
+import com.example.btl_mobile_spotify.navigation.Routes.fullScreenRoutes
 
 object Routes {
     const val ROUTE_HOME = "ROUTE_HOME"
@@ -15,7 +16,12 @@ object Routes {
     const val ROUTE_LIBS = "ROUTE_LIBS"
     const val ROUTE_PREMIUM = "ROUTE_PREMIUM"
     const val ROUTE_SPLASH = "ROUTE_SPLASH"
-    const val ROUTE_SONG_FULL = "ROUTE_SONG_FULL"
+    const val ROUTE_PLAYER_FULL = "ROUTE_PLAYER_FULL"
+
+    val fullScreenRoutes = listOf(
+        ROUTE_SPLASH,
+        ROUTE_PLAYER_FULL
+    )
 }
 
 sealed class Screen(
@@ -31,8 +37,11 @@ sealed class Screen(
 
     object Premium : Screen(route = ROUTE_PREMIUM, title = "Premium", icon = R.drawable.ic_premium)
     object Splash : Screen(route = ROUTE_SPLASH)
+    object PlayerFull : Screen(route = ROUTE_PLAYER_FULL)
 
-    object PlayerFull : Screen(route = ROUTE_SONG_FULL)
-
-
+    companion object {
+        fun isFullScreen(route: String?): Boolean {
+            return fullScreenRoutes.contains(route)
+        }
+    }
 }
