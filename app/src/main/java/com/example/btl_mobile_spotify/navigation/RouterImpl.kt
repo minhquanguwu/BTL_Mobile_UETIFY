@@ -10,4 +10,36 @@ class RouterImpl(
     override fun goHome() {
         TODO("Not yet implemented")
     }
+
+    override fun goPlayerFull(arg: Any?) {
+        navigate(Screen.PlayerFull)
+    }
+
+    override fun goProfileScreen(arg: Any?) {
+        navigate(Screen.Profile)
+    }
+
+    private fun navigate(
+        screen: Screen,
+        removeFromHistory: Boolean = false,
+        singleTop: Boolean = false
+    ) {
+        navHostController.apply {
+            navigate(screen.route) {
+                if (removeFromHistory) {
+                    if (singleTop) {
+                        popUpTo(Screen.Home.route)
+                    } else {
+                        popUpTo(0) {
+                            saveState = false
+                        }
+                    }
+
+                } else {
+                    restoreState = true
+                }
+                launchSingleTop = singleTop
+            }
+        }
+    }
 }

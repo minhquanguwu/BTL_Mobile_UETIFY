@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">BTL_Mobile_Spotify</string>
+    <string name="sign_in_continue">Sign In to Continue</string>
+    <string name="welcome">Welcome</string>
+    <string name="label_email">Email Address</string>
+    <string name="hint_email">Enter email</string>
+    <string name="label_password">Password</string>
+    <string name="hint_password">Enter password</string>
+    <string name="remeber_me">Remember me</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="or_continue">Or continue</string>
+    <string name="do_not_have_account">Do not have account</string>
+    <string name="sign_up">Sign up</string>
+    <string name="web_client_id">765768253874-2clf75qlbvqshf1b7t2f0km6soq5jlvj.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">718126673516241</string>
+    <string name="fb_login_protocol_scheme">fb718126673516241</string>
+    <string name="facebook_client_token">9d74bfec99d2d0a8daed1e43bc046383</string>
+    <string name="search_here">Search here</string>
+
+    <string name="home_header">Find the best music \nfor your banger</string>
+    <string name="playlist">Playlist</string>
+
+    <string name="notification_channel_name">MusicX Channel</string>
+    <string name="notification_channel_description">Shows the currently playing music</string>
 </resources>
