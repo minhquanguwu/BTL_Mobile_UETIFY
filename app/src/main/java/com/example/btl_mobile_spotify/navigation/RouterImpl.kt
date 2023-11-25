@@ -15,6 +15,10 @@ class RouterImpl(
         navigate(Screen.PlayerFull)
     }
 
+    override fun goProfileScreen(arg: Any?) {
+        navigate(Screen.Profile)
+    }
+
     private fun navigate(
         screen: Screen,
         removeFromHistory: Boolean = false,

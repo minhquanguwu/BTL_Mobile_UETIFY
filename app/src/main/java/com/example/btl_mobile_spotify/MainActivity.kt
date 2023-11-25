@@ -10,7 +10,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.rememberNavController
 import com.example.btl_mobile_spotify.screens.MainScreen
 import com.example.btl_mobile_spotify.ui.theme.BTL_Mobile_SpotifyTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +26,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BTL_Mobile_SpotifyTheme {
-                MainScreen()
+                MainScreen(navController = rememberNavController(), context = LocalContext.current,
+                    lifecycleScope = lifecycleScope)
             }
         }
     }

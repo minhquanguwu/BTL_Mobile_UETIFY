@@ -116,9 +116,9 @@ fun MusicPlayerScreen(
                     .clip(CircleShape)
                     .aspectRatio(1f)
                     .border(2.dp, Color.Gray, CircleShape)
-//                    .graphicsLayer {
-//                        rotationZ = angle
-//                    }
+                    .graphicsLayer {
+                        rotationZ = angle
+                    }
                     ,
                 data = viewModel.uiState.value.image
             )
