@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.btl_mobile_spotify.navigation.Graph
 import com.example.btl_mobile_spotify.navigation.Screen
 import com.example.btl_mobile_spotify.screens.sign_in.rules.Validator
 import com.example.btl_mobile_spotify.screens.user_data.UserInfo

@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
-import com.example.btl_mobile_spotify.navigation.RootNavigationGraph
 import com.example.btl_mobile_spotify.ui.theme.BTL_Mobile_SpotifyTheme
 import com.google.android.gms.auth.api.identity.Identity
 import com.facebook.FacebookSdk;
