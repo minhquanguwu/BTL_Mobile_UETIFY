@@ -67,6 +67,7 @@ fun SearchScreen(paddingValues: PaddingValues = PaddingValues(), viewModel: Sear
 fun SearchResults(songs: List<Music>) {
     val viewModel: SearchViewModel = hiltViewModel()
     val isSearching by viewModel.isSearching.collectAsState()
+    val searchText by viewModel.searchQuery.collectAsState()
 
     if (isSearching) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -74,7 +75,7 @@ fun SearchResults(songs: List<Music>) {
                 modifier = Modifier.align(Alignment.Center)
             )
         }
-    } else {
+    } else if (searchText.isNotBlank()){
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
