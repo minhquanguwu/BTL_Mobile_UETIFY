@@ -1,4 +1,4 @@
-package com.example.btl_mobile_spotify.screens
+package com.example.btl_mobile_spotify.screens.searchscreen
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -31,17 +31,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.btl_mobile_spotify.components.MusicItem
 import com.example.btl_mobile_spotify.components.SearchBar
-import com.example.btl_mobile_spotify.models.SearchViewModel
-import com.example.btl_mobile_spotify.models.Song
+import com.example.btl_mobile_spotify.data.models.local.Music
 import com.example.btl_mobile_spotify.ui.theme.BTL_Mobile_SpotifyTheme
 import kotlin.random.Random
 
 @Composable
-fun SearchScreen(paddingValues: PaddingValues = PaddingValues()) {
-    val viewModel = viewModel<SearchViewModel>()
-    val songs by viewModel.songs.collectAsState()
+fun SearchScreen(paddingValues: PaddingValues = PaddingValues(), viewModel: SearchViewModel = hiltViewModel()) {
+    val uiState by viewModel.uiState
+    val songs = uiState.musicList
     val genres by viewModel.genres.collectAsState()
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -64,8 +64,9 @@ fun SearchScreen(paddingValues: PaddingValues = PaddingValues()) {
 }
 
 @Composable
-fun SearchResults(songs: List<Song>) {
-    val isSearching by viewModel<SearchViewModel>().isSearching.collectAsState()
+fun SearchResults(songs: List<Music>) {
+    val viewModel: SearchViewModel = hiltViewModel()
+    val isSearching by viewModel.isSearching.collectAsState()
 
     if (isSearching) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -79,12 +80,7 @@ fun SearchResults(songs: List<Song>) {
                 .fillMaxWidth()
         ) {
             items(songs) { song ->
-                Text(
-                    text = song.title,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp)
-                )
+                MusicItem(music = song, onItemClick = {viewModel.onMusicListItemPressed(it)})
             }
         }
     }

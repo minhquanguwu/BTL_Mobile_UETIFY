@@ -22,7 +22,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.btl_mobile_spotify.R
-import com.example.btl_mobile_spotify.models.SearchViewModel
+import com.example.btl_mobile_spotify.screens.searchscreen.SearchViewModel
 import com.example.btl_mobile_spotify.ui.theme.BTL_Mobile_SpotifyTheme
 
 @Composable
@@ -42,7 +42,7 @@ fun SearchBar(
         Modifier.height(IntrinsicSize.Min)
     ) {
         TextField(
-            value = searchText,
+            value = if(isFocused) searchText else "",
             onValueChange = viewModel::onSearchTextChange,
             singleLine = true,
             interactionSource = interactionSource,
