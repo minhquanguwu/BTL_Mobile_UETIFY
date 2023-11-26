@@ -23,7 +23,7 @@ import com.example.btl_mobile_spotify.screens.LibsScreen
 import com.example.btl_mobile_spotify.screens.LoginScreen
 import com.example.btl_mobile_spotify.screens.PremiumScreen
 import com.example.btl_mobile_spotify.screens.ProfileScreen
-import com.example.btl_mobile_spotify.screens.SearchScreen
+import com.example.btl_mobile_spotify.screens.searchscreen.SearchScreen
 import com.example.btl_mobile_spotify.screens.SignUpScreen
 import com.example.btl_mobile_spotify.screens.SplashScreen
 import com.example.btl_mobile_spotify.screens.playerfullscreen.MusicPlayerScreen
@@ -36,8 +36,10 @@ import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun NavigationContainer(
     router: Router,
