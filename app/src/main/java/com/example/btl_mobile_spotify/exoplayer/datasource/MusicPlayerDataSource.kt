@@ -7,6 +7,8 @@ import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import com.example.btl_mobile_spotify.data.models.local.Music
 import com.example.btl_mobile_spotify.utils.DURATION
+import com.example.btl_mobile_spotify.utils.GENRE
+import com.example.btl_mobile_spotify.utils.LYRICS
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -57,6 +59,9 @@ abstract class MusicPlayerDataSource {
                 music.artists.joinToString(",")
             )
             putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, music.musicUrl)
+            putString(MediaMetadataCompat.METADATA_KEY_GENRE, music.genre)
+            putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIPTION, music.lyrics)
+
         }.build()
 
     private fun getMediaItemFromMusic(music: Music) = MediaBrowserCompat.MediaItem(
@@ -67,6 +72,8 @@ abstract class MusicPlayerDataSource {
             setMediaId(music.id)
             setIconUri(music.imageUrl.toUri())
             setExtras(bundleOf(DURATION to music.duration))
+            setExtras(bundleOf(GENRE to music.genre))
+            setExtras(bundleOf(LYRICS to music.lyrics))
         }.build(),
         MediaBrowserCompat.MediaItem.FLAG_PLAYABLE
     )

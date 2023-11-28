@@ -122,7 +122,7 @@ fun CoilImage(
 fun MusicBottomBarPreviewDark() {
     BTL_Mobile_SpotifyTheme {
         MusicBottomBar(
-            music = Music("", "Divide", 122131, listOf("Ed Sheeran"), "", ""),
+            music = Music("", "Divide", 122131, listOf("Ed Sheeran"), "", "","",""),
             isPlaying = true,
             modifier = Modifier
                 .fillMaxWidth()

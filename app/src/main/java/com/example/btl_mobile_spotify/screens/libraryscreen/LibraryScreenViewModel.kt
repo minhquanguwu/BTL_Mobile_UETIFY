@@ -29,7 +29,6 @@ import javax.inject.Inject
 class LibraryViewModel @Inject constructor(
     private val musicRepo: MusicRepo,
     private val dispatcher: Dispatcher,
-    private val firebaseMusicDataSource: FirebaseMusicDataSource
 ) : ViewModel() {
     val user = Firebase.auth.currentUser
     private val _searchQuery = MutableStateFlow("")

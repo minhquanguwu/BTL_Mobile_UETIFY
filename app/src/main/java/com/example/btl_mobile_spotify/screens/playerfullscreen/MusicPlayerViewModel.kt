@@ -132,6 +132,7 @@ class MusicPlayerViewModel @Inject constructor(
                     songArtistName = music.artists.getArtistsString(),
                     currentSongIndex = if (songIndex != -1) songIndex else 0,
                     totalDuration = music.duration,
+                    lyrics = music.lyrics,
                     musicControlButtonState = uiState.value.musicControlButtonState.copy(
                         isSkipNextButtonEnabled = songs.value.indexOfFirst { it.id == music.id } != songs.value.size - 1,
                         isSkipPrevButtonEnabled = songs.value.indexOfFirst { it.id == music.id } != 0

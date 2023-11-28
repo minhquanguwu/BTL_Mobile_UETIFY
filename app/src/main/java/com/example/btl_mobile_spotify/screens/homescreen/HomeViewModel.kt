@@ -60,8 +60,6 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun setUp() = viewModelScope.launch(dispatcher.main) {
-        musicRepo.deleteAllSongs()
-        musicRepo.deleteAllPlaylists()
         musicRepo.fetchAllMusic().collectLatest {  }
         musicRepo.fetchAllPlaylist().collectLatest {  }
 

@@ -13,7 +13,9 @@ class MusicMapper @Inject constructor() : Mapper<MusicDTO, Music> {
         duration = network.duration,
         artists = network.artists,
         imageUrl = network.imageUrl,
-        musicUrl = network.musicUrl
+        musicUrl = network.musicUrl,
+        genre = network.genre,
+        lyrics = network.lyrics
     )
 
     override fun toDomainList(networks: List<MusicDTO>): List<Music> = networks.map {
@@ -26,7 +28,9 @@ class MusicMapper @Inject constructor() : Mapper<MusicDTO, Music> {
         duration = domain.duration,
         artists = domain.artists,
         imageUrl = domain.imageUrl,
-        musicUrl = domain.musicUrl
+        musicUrl = domain.musicUrl,
+        genre = domain.genre,
+        lyrics = domain.lyrics
     )
 
     override fun toNetworkList(domains: List<Music>): List<MusicDTO> = domains.map {

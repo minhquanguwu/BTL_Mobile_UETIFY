@@ -5,7 +5,9 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIPTION
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DURATION
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_GENRE
 import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -43,7 +45,9 @@ fun MediaMetadataCompat.getMusic(): Music = Music(
     duration = getLong(METADATA_KEY_DURATION),
     artists = description.subtitle.toString().split(","),
     imageUrl = description.iconUri.toString(),
-    musicUrl = description.mediaUri.toString()
+    musicUrl = description.mediaUri.toString(),
+    genre = getString(METADATA_KEY_GENRE) ?: "Unkown",
+    lyrics = getString(METADATA_KEY_DISPLAY_DESCRIPTION) ?:"Unkown"
 )
 
 fun MediaBrowserCompat.MediaItem.getMusic(): Music = Music(
@@ -52,7 +56,10 @@ fun MediaBrowserCompat.MediaItem.getMusic(): Music = Music(
     duration = description.extras?.getLong("duration") ?: 0,
     artists = description.subtitle.toString().split(","),
     imageUrl = description.iconUri.toString(),
-    musicUrl = description.mediaUri.toString()
+    musicUrl = description.mediaUri.toString(),
+    genre = description.extras?.getString("genre") ?: "",
+    lyrics = description.extras?.getString("lyrics") ?: "",
+
 )
 
 fun Context.loadImageBitmap(url: String, onImageLoaded: (Bitmap) -> Unit) {

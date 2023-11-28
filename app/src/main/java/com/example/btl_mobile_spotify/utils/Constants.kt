@@ -7,6 +7,8 @@ const val MEDIA_ROOT_ID = "root_id"
 
 const val NETWORK_ERROR = "Network error"
 const val DURATION = "duration"
+const val GENRE = "genre"
+const val LYRICS = "lyrics"
 
 enum class MusicState {
     PLAYING, PAUSED, NONE

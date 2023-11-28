@@ -71,7 +71,7 @@ fun NavigationContainer(
             SearchScreen(paddingValues)
         }
         composable(Screen.Libs.route) {
-            LibsScreen(router)
+            LibsScreen(paddingValues, router)
         }
         composable((Screen.Playlist.route)){
             PlaylistScreen()

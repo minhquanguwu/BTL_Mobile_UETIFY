@@ -11,5 +11,7 @@ data class Music(
     val duration: Long,
     val artists: List<String>,
     val imageUrl: String,
-    val musicUrl: String
+    val musicUrl: String,
+    val genre: String,
+    val lyrics: String
 )

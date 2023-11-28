@@ -6,5 +6,7 @@ data class MusicDTO(
     val duration: Long = 0L,
     val artists: List<String> = emptyList(),
     val imageUrl: String = "",
-    val musicUrl: String = ""
+    val musicUrl: String = "",
+    val genre: String = "",
+    val lyrics: String = ""
 )

@@ -145,6 +145,7 @@ fun MusicPlayerScreen(
                 Spacer(modifier = Modifier.weight(2f))
                 IconBtn(resIcon = R.drawable.ic_baseline_share_24)
             }
+            Text(text = viewModel.uiState.value.lyrics)
         }
 
     }

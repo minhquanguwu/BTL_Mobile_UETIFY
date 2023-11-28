@@ -124,4 +124,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation ("com.squareup.retrofit2:converter-gson:$retrofit_version")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.2.1")
+
+    //constrain layout
+    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 }
