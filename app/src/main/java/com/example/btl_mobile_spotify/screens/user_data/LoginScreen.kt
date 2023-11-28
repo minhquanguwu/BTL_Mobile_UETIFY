@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.TextField
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -34,7 +36,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -48,6 +52,12 @@ fun LoginScreen(navController: NavHostController,
     var username by remember { mutableStateOf(("")) }
     var password by remember { mutableStateOf(("")) }
     val context = LocalContext.current
+    var passwordVisibility by remember { mutableStateOf(false) }
+    val icon = if (passwordVisibility){
+        painterResource(id = R.drawable.design_ic_visibility)
+    } else{
+        painterResource(id = R.drawable.design_ic_visibility_off)
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
             Modifier
@@ -87,7 +97,7 @@ fun LoginScreen(navController: NavHostController,
                         text = "Log in",
                         style = TextStyle(
                             fontSize = 20.sp,
-                            fontFamily = FontFamily.Serif,
+                            fontFamily = FontFamily.Default,
                             fontWeight = FontWeight(700),
                             color = Color(0xFFFFFFFF),
                             textAlign = TextAlign.Center,
@@ -101,14 +111,14 @@ fun LoginScreen(navController: NavHostController,
                     text = "Enter your Email or Username",
                     style = TextStyle(
                         fontSize = 16.sp,
-                        fontFamily = FontFamily.Serif,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight(700),
                         color = Color(0xFFFFFFFF),
                         textAlign = TextAlign.Start,
                     ),
                     modifier = Modifier
                         .width(300.dp)
-                        .height(27.dp).padding(start = 31.dp)
+                        .height(27.dp).padding(start = 40.dp)
                 )
                 TextField(
                     value = username,
@@ -121,13 +131,13 @@ fun LoginScreen(navController: NavHostController,
                         Text(text = "Email or Username",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                fontFamily = FontFamily.Serif,
+                                fontFamily = FontFamily.Default,
                                 color = Color(0xFFD6D6D6),
                                 textAlign = TextAlign.Start,
                         ))},
                     modifier = Modifier
                         .width(350.dp)
-                        .height(50.dp).padding(start = 31.dp)
+                        .height(50.dp).padding(start = 40.dp)
                         .background(color = Color(0xFF777777),
                             shape = RoundedCornerShape(size = 5.dp)
                     )
@@ -137,14 +147,14 @@ fun LoginScreen(navController: NavHostController,
                     text = "Enter your password",
                     style = TextStyle(
                         fontSize = 16.sp,
-                        fontFamily = FontFamily.Serif,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight(700),
                         color = Color(0xFFFFFFFF),
                         textAlign = TextAlign.Start,
                     ),
                     modifier = Modifier
                         .width(300.dp)
-                        .height(27.dp).padding(start = 31.dp)
+                        .height(27.dp).padding(start = 40.dp)
                 )
                 TextField(
                     value = password,
@@ -156,13 +166,23 @@ fun LoginScreen(navController: NavHostController,
                         Text(text = "Password",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                fontFamily = FontFamily.Serif,
+                                fontFamily = FontFamily.Default,
                                 color = Color(0xFFD6D6D6),
                                 textAlign = TextAlign.Start,
                             ))},
+                    trailingIcon = {
+                        IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                            Icon(
+                                painter = icon,
+                                contentDescription = "Visibility icon"
+                            )
+                        }
+                    },
+                    visualTransformation = if(passwordVisibility) VisualTransformation.None
+                    else PasswordVisualTransformation(),
                     modifier = Modifier
                         .width(350.dp)
-                        .height(50.dp).padding(start = 31.dp)
+                        .height(50.dp).padding(start = 40.dp)
                         .background(color = Color(0xFF777777),
                             shape = RoundedCornerShape(size = 5.dp))
                 )
@@ -170,17 +190,17 @@ fun LoginScreen(navController: NavHostController,
 
                 if (nativeLoginViewModel.isSignedInFail.value == true) {
                     Text(
-                        text = "Invalid email or password",
+                        text = "Wrong email or password.",
                         style = TextStyle(
                             fontSize = 16.sp,
-                            fontFamily = FontFamily.Serif,
-                            fontWeight = FontWeight(700),
+                            fontFamily = FontFamily.Default,
+                            fontWeight = FontWeight(300),
                             color = Color.Red,
                             textAlign = TextAlign.Start,
                         ),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 31.dp)
+                            .padding(start = 40.dp)
                     )
                 }
                 Button(
@@ -198,7 +218,7 @@ fun LoginScreen(navController: NavHostController,
                         text = "Log in",
                         style = TextStyle(
                             fontSize = 16.sp,
-                            fontFamily = FontFamily.Serif,
+                            fontFamily = FontFamily.Default,
                             fontWeight = FontWeight(700),
                             color = Color(0xFF000000),
                             textAlign = TextAlign.Center,

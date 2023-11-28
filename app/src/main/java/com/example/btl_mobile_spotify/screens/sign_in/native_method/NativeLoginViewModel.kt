@@ -44,7 +44,7 @@ class NativeLoginViewModel(private val navController: NavController) : ViewModel
         validateLoginUIDataWithRules()
     }
 
-    private fun validateLoginUIDataWithRules() {
+    fun validateLoginUIDataWithRules() {
         val emailResult = Validator.validateEmail(
             email = nativeLoginUIState.value.email
         )
@@ -72,8 +72,6 @@ class NativeLoginViewModel(private val navController: NavController) : ViewModel
             .getInstance()
             .signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                Log.d(TAG,"Inside_login_success")
-                Log.d(TAG,"${it.isSuccessful}")
                 if(it.isSuccessful){
                     loginInProgress.value = false
                     navController.navigate(Screen.Home.route)
@@ -81,8 +79,6 @@ class NativeLoginViewModel(private val navController: NavController) : ViewModel
                 }
             }
             .addOnFailureListener {
-                Log.d(TAG,"Inside_login_failure")
-                Log.d(TAG,"${it.localizedMessage}")
                 loginInProgress.value = false
                 isSignedInFail.value = true
             }
