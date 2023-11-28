@@ -1,8 +1,6 @@
 package com.example.btl_mobile_spotify.screens.sign_in.rules
 
 object Validator {
-
-
     fun validateFullName(fName: String): ValidationResult {
         return ValidationResult(
             (!fName.isNullOrEmpty() && fName.length >= 2)
@@ -18,12 +16,6 @@ object Validator {
     fun validatePassword(password: String): ValidationResult {
         return ValidationResult(
             (!password.isNullOrEmpty() && password.length >= 4)
-        )
-    }
-
-    fun validatePrivacyPolicyAcceptance(statusValue:Boolean):ValidationResult{
-        return ValidationResult(
-            statusValue
         )
     }
 

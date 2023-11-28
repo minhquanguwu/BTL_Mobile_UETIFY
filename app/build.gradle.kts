@@ -66,6 +66,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material:material")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -127,4 +128,25 @@ dependencies {
 
     //constrain layout
     implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
+    // Local Unit Tests
+    implementation ("androidx.test:core:1.2.0")
+    testImplementation ("junit:junit:4.13")
+    testImplementation ("org.hamcrest:hamcrest-all:1.3")
+    testImplementation ("androidx.arch.core:core-testing:2.1.0")
+    testImplementation ("org.robolectric:robolectric:4.3.1")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1")
+    testImplementation ("com.google.truth:truth:1.0.1")
+    testImplementation ("org.mockito:mockito-core:2.21.0")
+
+    // Instrumented Unit Tests
+    androidTestImplementation ("junit:junit:4.13")
+    androidTestImplementation ("com.linkedin.dexmaker:dexmaker-mockito:2.12.1")
+    androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1")
+    androidTestImplementation ("androidx.arch.core:core-testing:2.1.0")
+    androidTestImplementation ("com.google.truth:truth:1.0.1")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.1")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.2.0")
+    androidTestImplementation ("org.mockito:mockito-core:2.21.0")
+
 }

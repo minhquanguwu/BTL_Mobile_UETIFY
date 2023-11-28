@@ -84,8 +84,9 @@ fun StartScreen(navController: NavHostController,
                     .verticalScroll(rememberScrollState())
                     .padding(horizontal = 0.dp, vertical = 0.dp)
             ){
+                Spacer(modifier = Modifier.height(6.dp))
                 Image(
-                    painter = painterResource(id = R.drawable.start_img),
+                    painter = painterResource(id = R.drawable.start_img_3),
                     contentDescription = "image description",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -99,7 +100,7 @@ fun StartScreen(navController: NavHostController,
                     text = "Millions of Songs.\nFree on Uetify.",
                     style = TextStyle(
                         fontSize = 24.sp,
-                        fontFamily = FontFamily.Serif,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight(700),
                         color = Color(0xFFFFFFFF),
                         textAlign = TextAlign.Center,
@@ -118,7 +119,7 @@ fun StartScreen(navController: NavHostController,
                         text = "Sign up free",
                         style = TextStyle(
                             fontSize = 16.sp,
-                            fontFamily = FontFamily.Serif,
+                            fontFamily = FontFamily.Default,
                             fontWeight = FontWeight(700),
                             color = Color(0xFF000000),
                             textAlign = TextAlign.Center,
@@ -146,7 +147,7 @@ fun StartScreen(navController: NavHostController,
                         text = "Continue with Google",
                         style = TextStyle(
                             fontSize = 16.sp,
-                            fontFamily = FontFamily.Serif,
+                            fontFamily = FontFamily.Default,
                             fontWeight = FontWeight(700),
                             color = Color(0xFFF5F5F5),
                             textAlign = TextAlign.Center,
@@ -177,7 +178,7 @@ fun StartScreen(navController: NavHostController,
                             text = "Continue with Facebook",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                fontFamily = FontFamily.Serif,
+                                fontFamily = FontFamily.Default,
                                 fontWeight = FontWeight(700),
                                 color = Color(0xFFF5F5F5),
                                 textAlign = TextAlign.Center,
@@ -190,12 +191,12 @@ fun StartScreen(navController: NavHostController,
                     Spacer(modifier = Modifier
                         .fillMaxWidth()
                         .height(49.dp));
-                    signInWithFb(
-                        onSignInFail = {
-                            Toast.makeText(context, "Try again", Toast.LENGTH_SHORT).show()
-                        },
-                        onSignedIn = {navController.navigate(Screen.Home.route)}
-                    )
+//                    signInWithFb(
+//                        onSignInFail = {
+//                            Toast.makeText(context, "Try again", Toast.LENGTH_SHORT).show()
+//                        },
+//                        onSignedIn = {navController.navigate(Screen.Home.route)}
+//                    )
                 }
 
                 Spacer(modifier = Modifier.height(6.dp))
@@ -214,7 +215,7 @@ fun StartScreen(navController: NavHostController,
                         text = "Log in",
                         style = TextStyle(
                             fontSize = 16.sp,
-                            fontFamily = FontFamily.Serif,
+                            fontFamily = FontFamily.Default,
                             fontWeight = FontWeight(700),
                             color = Color(0xFFF5F5F5),
                             textAlign = TextAlign.Center
@@ -272,8 +273,8 @@ fun signInWithFb(
             .alpha(0.0f))
 }
 
-//@Preview
-//@Composable
-//fun LoginScreen1Preview() {
-//    StartScreen(navController = rememberNavController(), signInClick = {}, state = AdditionalSignInState())
-//}
+@Preview
+@Composable
+fun LoginScreen1Preview() {
+    StartScreen(navController = rememberNavController(), signInClick = {}, state = AdditionalSignInState())
+}

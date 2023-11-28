@@ -91,6 +91,7 @@ fun NavigationContainer(
         }
         composable(Screen.Profile.route) {
             ProfileScreen(
+                userData = googleAuthUiClient.getSignedInUser(),
                 userInfo = nativeLoginViewModel.getSignedInUser(),
                 onSignOut = {
                     Firebase.auth.signOut()

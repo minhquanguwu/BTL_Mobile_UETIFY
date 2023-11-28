@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -26,16 +27,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.TextField
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -57,6 +64,12 @@ fun SignUpScreen(navController: NavHostController,
     var email by remember { mutableStateOf(("")) }
     var password by remember { mutableStateOf(("")) }
     val context = LocalContext.current
+    var passwordVisibility by remember { mutableStateOf(false) }
+    val icon = if (passwordVisibility){
+        painterResource(id = R.drawable.design_ic_visibility)
+    } else{
+        painterResource(id = R.drawable.design_ic_visibility_off)
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
             Modifier
@@ -100,7 +113,7 @@ fun SignUpScreen(navController: NavHostController,
                         text = "Sign up",
                         style = TextStyle(
                             fontSize = 20.sp,
-                            fontFamily = FontFamily.Serif,
+                            fontFamily = FontFamily.Default,
                             fontWeight = FontWeight(700),
                             color = Color(0xFFFFFFFF),
                             textAlign = TextAlign.Center,
@@ -115,7 +128,7 @@ fun SignUpScreen(navController: NavHostController,
                     text = "What's your name?",
                     style = TextStyle(
                         fontSize = 16.sp,
-                        fontFamily = FontFamily.Serif,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight(700),
                         color = Color(0xFFFFFFFF),
                         textAlign = TextAlign.Start,
@@ -123,7 +136,7 @@ fun SignUpScreen(navController: NavHostController,
                     modifier = Modifier
                         .width(300.dp)
                         .height(27.dp)
-                        .padding(start = 31.dp)
+                        .padding(start = 40.dp)
                 )
                 TextField(
                     value = name,
@@ -136,25 +149,40 @@ fun SignUpScreen(navController: NavHostController,
                         Text(text = "Name",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                fontFamily = FontFamily.Serif,
+                                fontFamily = FontFamily.Default,
                                 color = Color(0xFFD6D6D6),
                                 textAlign = TextAlign.Start,
                             ))},
                     modifier = Modifier
                         .width(350.dp)
                         .height(50.dp)
-                        .padding(start = 31.dp)
+                        .padding(start = 40.dp)
                         .background(
                             color = Color(0xFF777777),
                             shape = RoundedCornerShape(size = 5.dp)
                         )
                 )
+                if (signUpViewModel.isNameValid.value == false) {
+                    Text(
+                        text = "Your name must have more than 1 character.",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily.Default,
+                            fontWeight = FontWeight(300),
+                            color = Color.Red,
+                            textAlign = TextAlign.Start,
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 40.dp)
+                    )
+                }
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = "What's your email?",
                     style = TextStyle(
                         fontSize = 16.sp,
-                        fontFamily = FontFamily.Serif,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight(700),
                         color = Color(0xFFFFFFFF),
                         textAlign = TextAlign.Start,
@@ -162,7 +190,7 @@ fun SignUpScreen(navController: NavHostController,
                     modifier = Modifier
                         .width(300.dp)
                         .height(27.dp)
-                        .padding(start = 31.dp)
+                        .padding(start = 40.dp)
                 )
                 TextField(
                     value = email,
@@ -175,25 +203,55 @@ fun SignUpScreen(navController: NavHostController,
                         Text(text = "Email",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                fontFamily = FontFamily.Serif,
+                                fontFamily = FontFamily.Default,
                                 color = Color(0xFFD6D6D6),
                                 textAlign = TextAlign.Start,
                             ))},
                     modifier = Modifier
                         .width(350.dp)
                         .height(50.dp)
-                        .padding(start = 31.dp)
+                        .padding(start = 40.dp)
                         .background(
                             color = Color(0xFF777777),
                             shape = RoundedCornerShape(size = 5.dp)
                         )
                 )
+                if (signUpViewModel.isEmailValid.value == false) {
+                    Text(
+                        text = "Invalid email.",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily.Default,
+                            fontWeight = FontWeight(300),
+                            color = Color.Red,
+                            textAlign = TextAlign.Start,
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 40.dp)
+                    )
+                }
+                if (signUpViewModel.isSignedUpFail.value == true) {
+                    Text(
+                        text = "Bad email format, please retype.",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily.Default,
+                            fontWeight = FontWeight(300),
+                            color = Color.Red,
+                            textAlign = TextAlign.Start,
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 40.dp)
+                    )
+                }
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = "Enter your password",
                     style = TextStyle(
                         fontSize = 16.sp,
-                        fontFamily = FontFamily.Serif,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight(700),
                         color = Color(0xFFFFFFFF),
                         textAlign = TextAlign.Start,
@@ -201,7 +259,7 @@ fun SignUpScreen(navController: NavHostController,
                     modifier = Modifier
                         .width(300.dp)
                         .height(27.dp)
-                        .padding(start = 31.dp)
+                        .padding(start = 40.dp)
                 )
                 TextField(
                     value = password,
@@ -213,36 +271,47 @@ fun SignUpScreen(navController: NavHostController,
                         Text(text = "Password",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                fontFamily = FontFamily.Serif,
+                                fontFamily = FontFamily.Default,
                                 color = Color(0xFFD6D6D6),
                                 textAlign = TextAlign.Start,
                             ))},
+                    trailingIcon = {
+                        IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                            Icon(
+                                painter = icon,
+                                contentDescription = "Visibility icon"
+                            )
+                        }
+                    },
+                    visualTransformation = if(passwordVisibility) VisualTransformation.None
+                            else PasswordVisualTransformation(),
                     modifier = Modifier
                         .width(350.dp)
                         .height(50.dp)
-                        .padding(start = 31.dp)
+                        .padding(start = 40.dp)
                         .background(
                             color = Color(0xFF777777),
                             shape = RoundedCornerShape(size = 5.dp)
                         )
                 )
-                Spacer(modifier = Modifier.height(24.dp))
-
-                if (signUpViewModel.isSignedUpFail.value == true) {
+                if (signUpViewModel.isPasswordValid.value == false) {
                     Text(
-                        text = "Invalid email or password",
+                        text = "Password length must be greater than 3.",
                         style = TextStyle(
-                            fontSize = 16.sp,
-                            fontFamily = FontFamily.Serif,
-                            fontWeight = FontWeight(700),
-                            color = Color.Red, // You can customize the color
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily.Default,
+                            fontWeight = FontWeight(300),
+                            color = Color.Red,
                             textAlign = TextAlign.Start,
                         ),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 31.dp)
+                            .padding(start = 40.dp)
                     )
                 }
+                Spacer(modifier = Modifier.height(24.dp))
+
+
 
                 Button(
                     onClick ={
@@ -260,7 +329,7 @@ fun SignUpScreen(navController: NavHostController,
                         text = "Sign up",
                         style = TextStyle(
                             fontSize = 16.sp,
-                            fontFamily = FontFamily.Serif,
+                            fontFamily = FontFamily.Default,
                             fontWeight = FontWeight(700),
                             color = Color(0xFF000000),
                             textAlign = TextAlign.Center,
@@ -275,8 +344,8 @@ fun SignUpScreen(navController: NavHostController,
     }
 }
 
-//@Preview
-//@Composable
-//fun LoginScreen2Preview(){
-//    SignUpScreen(navController = rememberNavController() )
-//}
+@Preview
+@Composable
+fun LoginScreen2Preview(){
+    SignUpScreen(navController = rememberNavController(), signUpViewModel = SignUpViewModel(navController = rememberNavController()) )
+}
