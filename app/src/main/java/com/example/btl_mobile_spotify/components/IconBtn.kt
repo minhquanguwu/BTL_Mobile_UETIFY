@@ -81,7 +81,7 @@ fun RoundImageButton(
     modifier: Modifier = Modifier,
     iconOffset: Dp = 0.dp,
     isEnabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     IconButton(
         onClick = onClick,

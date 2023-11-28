@@ -5,4 +5,5 @@ interface Router {
     fun goPlayerFull(arg: Any?)
 
     fun goProfileScreen(arg: Any?)
+    fun goAddToPlaylistScreen(arg: Any?)
 }

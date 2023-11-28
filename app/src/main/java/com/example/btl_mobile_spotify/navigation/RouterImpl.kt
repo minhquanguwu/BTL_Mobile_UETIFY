@@ -11,9 +11,14 @@ class RouterImpl(
         TODO("Not yet implemented")
     }
 
+    override fun goAddToPlaylistScreen(arg: Any?) {
+        navigate(Screen.Playlist)
+    }
+
     override fun goPlayerFull(arg: Any?) {
         navigate(Screen.PlayerFull)
     }
+
 
     override fun goProfileScreen(arg: Any?) {
         navigate(Screen.Profile)

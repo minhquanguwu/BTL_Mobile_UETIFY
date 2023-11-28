@@ -5,6 +5,7 @@ import com.example.btl_mobile_spotify.R
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_HOME
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_LIBS
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_PLAYER_FULL
+import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_PLAYLIST
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_PREMIUM
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_SEARCH
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_SPLASH
@@ -21,6 +22,7 @@ object Routes {
     const val ROUTE_LOGIN = "ROUTE_LOGIN"
     const val ROUTE_SIGNUP = "ROUTE_SIGNUP"
     const val ROUTE_START = "ROUTE_START"
+    const val ROUTE_PLAYLIST = "ROUTE_PLAYLIST"
 
     val fullScreenRoutes = listOf(
         ROUTE_SPLASH,
@@ -42,6 +44,7 @@ sealed class Screen(
     object Home : Screen(route = ROUTE_HOME, title = "Home", icon = R.drawable.ic_home_filled)
     object Search : Screen(route = ROUTE_SEARCH, title = "Search", icon = R.drawable.ic_search_big)
     object Libs : Screen(route = ROUTE_LIBS, title = "Your Library", icon = R.drawable.ic_library_big)
+    object Playlist : Screen(route = ROUTE_PLAYLIST, title = "Your Playlist")
 
     object Premium : Screen(route = ROUTE_PREMIUM, title = "Premium", icon = R.drawable.ic_premium)
     object Splash : Screen(route = ROUTE_SPLASH)
