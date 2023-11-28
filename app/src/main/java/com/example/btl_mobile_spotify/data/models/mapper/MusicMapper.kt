@@ -1,7 +1,9 @@
 package com.example.btl_mobile_spotify.data.models.mapper
 
 import com.example.btl_mobile_spotify.data.models.local.Music
+import com.example.btl_mobile_spotify.data.models.local.Playlist
 import com.example.btl_mobile_spotify.data.models.remote.MusicDTO
+import com.example.btl_mobile_spotify.data.models.remote.PlaylistDTO
 import javax.inject.Inject
 
 class MusicMapper @Inject constructor() : Mapper<MusicDTO, Music> {
@@ -30,4 +32,6 @@ class MusicMapper @Inject constructor() : Mapper<MusicDTO, Music> {
     override fun toNetworkList(domains: List<Music>): List<MusicDTO> = domains.map {
         toNetwork(it)
     }
+
+
 }

@@ -4,10 +4,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +48,7 @@ fun MusicItem(
         backgroundColor = color,
         elevation = 1.dp,
     ) {
+        var showMenu by remember { mutableStateOf(false)}
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -58,7 +65,8 @@ fun MusicItem(
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(
-                modifier = Modifier.fillMaxHeight()
+                modifier = Modifier
+                    .fillMaxHeight()
                     .width(250.dp),
                 verticalArrangement = Arrangement.Center
             ) {
@@ -77,7 +85,17 @@ fun MusicItem(
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-            IconBtn(resIcon = R.drawable.ic_dots)
+            Column {
+                IconBtn(resIcon = R.drawable.ic_dots, onClick = {showMenu = !showMenu})
+                DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                    DropdownMenuItem(onClick = { /*TODO*/ }) {
+                        Text("Add to playlist", style = MaterialTheme.typography.body1)
+                    }
+                    DropdownMenuItem(onClick = { /*TODO*/ }) {
+                        Text("Add to favourite", style = MaterialTheme.typography.body1)
+                    }
+                }
+            }
         }
     }
 }

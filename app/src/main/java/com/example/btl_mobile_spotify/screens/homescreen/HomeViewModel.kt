@@ -1,10 +1,12 @@
 package com.example.btl_mobile_spotify.screens.homescreen
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.btl_mobile_spotify.data.models.local.Music
+import com.example.btl_mobile_spotify.data.models.local.Playlist
 import com.example.btl_mobile_spotify.data.repo.MusicRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.example.btl_mobile_spotify.utils.*
@@ -45,6 +47,7 @@ class HomeViewModel @Inject constructor(
 //        sampleMusicList.subList(0, sampleMusicList.size).forEach {
 //            uploadMusic(it)
 //        }
+        setUp()
         collectSongs()
         collectCurrentSong()
         collectPlayBackState()
@@ -56,8 +59,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private fun setUp() = viewModelScope.launch(dispatcher.main) {
+        musicRepo.deleteAllSongs()
+        musicRepo.deleteAllPlaylists()
+        musicRepo.fetchAllMusic().collectLatest {  }
+        musicRepo.fetchAllPlaylist().collectLatest {  }
+
+    }
+
     private fun collectSongs() = viewModelScope.launch(dispatcher.main) {
-        musicRepo.fetchAllMusic()
         musicList.collectLatest {
             _uiState.value = uiState.value.copy(musicList = it)
         }

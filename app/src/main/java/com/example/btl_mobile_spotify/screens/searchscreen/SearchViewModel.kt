@@ -1,5 +1,6 @@
 package com.example.btl_mobile_spotify.screens.searchscreen
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -28,6 +29,7 @@ class SearchViewModel @Inject constructor(
 ): ViewModel() {
     init {
         collectSongs()
+
     }
 
     private val _uiState = mutableStateOf(SearchScreenState())

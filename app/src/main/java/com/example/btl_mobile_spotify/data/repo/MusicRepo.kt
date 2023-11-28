@@ -1,6 +1,7 @@
 package com.example.btl_mobile_spotify.data.repo
 
 import com.example.btl_mobile_spotify.data.models.local.Music
+import com.example.btl_mobile_spotify.data.models.local.Playlist
 import com.example.btl_mobile_spotify.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
@@ -22,4 +23,12 @@ interface MusicRepo {
     suspend fun fetchAllMusic(): Flow<Resource<Unit>>
 
     suspend fun cacheMusic(songs: List<Music>)
+
+    fun getAllPlaylistsFlow(query: String = ""): Flow<List<Playlist>>
+    suspend fun uploadPlaylist(playlist: Playlist): Flow<Resource<Unit>>
+    suspend fun fetchAllPlaylist(): Flow<Resource<Unit>>
+    suspend fun deleteAllPlaylists()
+    suspend fun insertPlaylists(playlists: List<Playlist>)
+    suspend fun cachePlaylist(playlists: List<Playlist>)
+
 }

@@ -75,7 +75,7 @@ fun MusicPlayerScreen(
         initialValue = 0F,
         targetValue = 360F,
         animationSpec = infiniteRepeatable(
-            animation = tween(10000, easing = LinearEasing)
+            animation = tween(15000, easing = LinearEasing)
         )
     )
 
