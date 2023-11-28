@@ -27,6 +27,7 @@ import com.example.btl_mobile_spotify.screens.searchscreen.SearchScreen
 import com.example.btl_mobile_spotify.screens.SignUpScreen
 import com.example.btl_mobile_spotify.screens.SplashScreen
 import com.example.btl_mobile_spotify.screens.playerfullscreen.MusicPlayerScreen
+import com.example.btl_mobile_spotify.screens.playlist.PlaylistScreen
 import com.example.btl_mobile_spotify.screens.sign_in.StartScreen
 import com.example.btl_mobile_spotify.screens.sign_in.additional_method.AdditionalSignInViewModel
 import com.example.btl_mobile_spotify.screens.sign_in.additional_method.GoogleAuthUiClient
@@ -48,6 +49,7 @@ fun NavigationContainer(
     context: Context,
     lifecycleScope: LifecycleCoroutineScope
 ) {
+
     val startDestination = remember { mutableStateOf(Screen.Splash.route) }
     LaunchedEffect(startDestination) {
         if (startDestination.value == Screen.Start.route) {
@@ -69,7 +71,10 @@ fun NavigationContainer(
             SearchScreen(paddingValues)
         }
         composable(Screen.Libs.route) {
-            LibsScreen(paddingValues, router)
+            LibsScreen(router)
+        }
+        composable((Screen.Playlist.route)){
+            PlaylistScreen()
         }
         composable(Screen.Premium.route) {
             PremiumScreen(paddingValues)
@@ -97,6 +102,7 @@ fun NavigationContainer(
         composable(route = Screen.Login.route) {
             LoginScreen(navController, NativeLoginViewModel(navController))
         }
+
 
         composable(route = Screen.Start.route) {
             val viewModel = viewModel<AdditionalSignInViewModel>()
