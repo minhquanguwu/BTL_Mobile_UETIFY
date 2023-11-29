@@ -190,6 +190,7 @@ fun MusicSlider(
 private fun MusicControlButtons(
     tint: Color,
     state: MusicControlButtonState,
+    musicPlayViewModel: MusicPlayerViewModel = hiltViewModel()
 //    onPlayListButtonPress: () -> Unit
 ) {
     Row(
@@ -198,8 +199,11 @@ private fun MusicControlButtons(
         modifier = Modifier.fillMaxWidth()
     ) {
         LoopButton(
-            true,
-        ) {}
+            state.onLoopButtonPressed,
+            musicPlayViewModel._musicControlButtonState.value.canLoop,
+        )
+
+
         PreviousTrackButton(
             true,
             state.onSkipPrevButtonPressed

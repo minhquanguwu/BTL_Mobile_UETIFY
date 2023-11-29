@@ -1,11 +1,15 @@
 package com.example.btl_mobile_spotify.screens.playerfullscreen
 
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +27,9 @@ data class MusicControlButtonState(
     val isSkipNextButtonEnabled: Boolean = true,
     val onPlayPauseButtonClicked: () -> Unit = {},
     val onSkipNextButtonPressed: () -> Unit = {},
-    val onSkipPrevButtonPressed: () -> Unit = {}
+    val onSkipPrevButtonPressed: () -> Unit = {},
+    val canLoop: Boolean = false,
+    val onLoopButtonPressed: () -> Unit = {}
 )
 
 data class MusicSliderState(
@@ -77,9 +83,8 @@ fun NextTrackButton(
 
 @Composable
 fun LoopButton(
-    isEnabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isLoopEnabled: Boolean = true
 ) {
-    IconBtn(resIcon = R.drawable.ic_round_loop_24, onClick = onClick)
-
+    IconBtn(resIcon = if (!isLoopEnabled) R.drawable.ic_round_loop_24 else R.drawable.ic_round_loop_25, onClick = onClick, tint = Color.Unspecified)
 }
