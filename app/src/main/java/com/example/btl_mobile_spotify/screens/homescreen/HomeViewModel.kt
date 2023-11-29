@@ -119,7 +119,6 @@ class HomeViewModel @Inject constructor(
 
     fun addSongToPlaylist(song: Music, playlist: Playlist) = viewModelScope.launch(dispatcher.main) {
         musicRepo.addSongToPlaylist(song, playlist)
-        uploadPlaylist(playlist)
     }
 
     fun uploadPlaylist(playlist: Playlist) = viewModelScope.launch(dispatcher.main) {

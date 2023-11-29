@@ -104,18 +104,26 @@ fun SongList(viewModel : HomeViewModel, musicList : List<Music>) {
                             Checkbox(
                                 colors = CheckboxDefaults.colors(uncheckedColor = Color.DarkGray, checkedColor = Color.White),
                                 checked = checked, onCheckedChange = {checkValue ->
-                                    if (checkValue) {
+                                    checked = checkValue
+                                    if (checked) {
                                         if (!playlist.listMusicId.contains(tempMusic.id)) {
+                                            val updatedList = playlist.listMusicId.toMutableList().apply {
+                                                add(tempMusic.id)
+                                            }
+                                            val updatedPlaylist = playlist.copy(listMusicId = updatedList)
                                             viewModel.addSongToPlaylist(tempMusic, playlist)
+                                            viewModel.uploadPlaylist(updatedPlaylist)
                                         }
-                                        checked = true
                                     } else {
-                                        checked = false
+                                        if (playlist.listMusicId.contains(tempMusic.id)) {
+                                            val updatedList = playlist.listMusicId.toMutableList().apply {
+                                                remove(tempMusic.id)
+                                            }
+                                            val updatedPlaylist = playlist.copy(listMusicId = updatedList)
+                                            viewModel.uploadPlaylist(updatedPlaylist)
+                                        }
+
                                     }
-
-
-
-
                                 }, modifier = Modifier.weight(1f))
                         }
                     }
