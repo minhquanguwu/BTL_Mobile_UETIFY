@@ -7,6 +7,8 @@ import com.acrcloud.rec.ACRCloudClient
 import com.acrcloud.rec.ACRCloudConfig
 import com.acrcloud.rec.ACRCloudResult
 import com.acrcloud.rec.IACRCloudListener
+import org.json.JSONException
+import org.json.JSONObject
 
 
 class MusicRecognition(val context: Context) : IACRCloudListener {
@@ -72,10 +74,45 @@ class MusicRecognition(val context: Context) : IACRCloudListener {
 
         //TODO: Show result
         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-        Log.d("Result", result.toString())
-
+        val song = result?.let { handleResult(it) }
+        if (result != null) {
+            Log.d("Result", result)
+        }
+        if (song != null) {
+            Log.d("Song", song)
+        }
 
         cancel()
+    }
+
+    private fun handleResult(acrResult: String): String {
+        var res = ""
+        try {
+            val json = JSONObject(acrResult)
+            val status: JSONObject = json.getJSONObject("status")
+            val code = status.getInt("code")
+            if (code == 0) {
+                val metadata: JSONObject = json.getJSONObject("metadata")
+                if (metadata.has("music")) {
+                    val musics = metadata.getJSONArray("music")
+                    val tt = musics[0] as JSONObject
+                    val title = tt.getString("title")
+                    val artistt = tt.getJSONArray("artists")
+                    val art = artistt[0] as JSONObject
+                    val artist = art.getString("name")
+
+                    res = "$title ($artist)"
+                }
+            } else {
+                // TODO: Handle error
+                res = acrResult
+            }
+        } catch (e: JSONException) {
+            res = "Error parsing metadata"
+            Log.e("ACR", "JSONException", e)
+        }
+
+        return res
     }
 
     override fun onVolumeChanged(curVolume: Double) {}
