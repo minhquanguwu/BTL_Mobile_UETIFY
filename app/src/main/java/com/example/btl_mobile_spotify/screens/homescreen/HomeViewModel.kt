@@ -10,6 +10,8 @@ import com.example.btl_mobile_spotify.data.models.local.Playlist
 import com.example.btl_mobile_spotify.data.repo.MusicRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.example.btl_mobile_spotify.utils.*
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -23,7 +25,7 @@ class HomeViewModel @Inject constructor(
     private val musicUseCase: MusicUseCase,
     private val dispatcher: Dispatcher
 ) : ViewModel() {
-
+    val user = Firebase.auth.currentUser
     private val _uiState = mutableStateOf(HomeScreenState())
     val uiState: State<HomeScreenState> = _uiState
 
@@ -34,6 +36,10 @@ class HomeViewModel @Inject constructor(
 
     private val musicList = searchQuery.flatMapLatest {
         musicRepo.getAllSongsFlow(it)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
+    private val playlistList = searchQuery.flatMapLatest {
+        musicRepo.getAllPlaylistsFlow(it)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
 //    private val musicList = searchQuery.flatMapLatest { query ->
@@ -49,6 +55,7 @@ class HomeViewModel @Inject constructor(
 //        }
 //        setUp()
         collectSongs()
+        collectAllPlaylist()
         collectCurrentSong()
         collectPlayBackState()
     }
@@ -100,5 +107,24 @@ class HomeViewModel @Inject constructor(
     fun onSearchQueryChanged(query: String) = viewModelScope.launch(dispatcher.main) {
         _uiState.value = uiState.value.copy(searchBarText = query)
         searchQuery.emit(query)
+    }
+
+    fun collectAllPlaylist() = viewModelScope.launch(dispatcher.main) {
+        musicRepo.fetchAllPlaylist().collectLatest {  }
+        playlistList.collectLatest {
+            val tempList = it.filter { playlist -> playlist.userID == user?.uid  }
+            _uiState.value = uiState.value.copy(playlistList = tempList)
+        }
+    }
+
+    fun addSongToPlaylist(song: Music, playlist: Playlist) = viewModelScope.launch(dispatcher.main) {
+        musicRepo.addSongToPlaylist(song, playlist)
+        uploadPlaylist(playlist)
+    }
+
+    fun uploadPlaylist(playlist: Playlist) = viewModelScope.launch(dispatcher.main) {
+        musicRepo.uploadPlaylist(playlist).collectLatest {
+            Timber.d("${playlist.name} - ${it.javaClass}")
+        }
     }
 }

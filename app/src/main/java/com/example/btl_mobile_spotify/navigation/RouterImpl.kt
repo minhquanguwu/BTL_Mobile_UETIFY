@@ -1,6 +1,8 @@
 package com.example.btl_mobile_spotify.navigation
 
+import android.os.Bundle
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_HOME
 
 class RouterImpl(
@@ -15,10 +17,12 @@ class RouterImpl(
         navigate(Screen.Playlist)
     }
 
+    override fun goListSongInPlaylistScreen(arg: Any?) {
+        navigate(Screen.ListSongInPlaylist)
+    }
     override fun goPlayerFull(arg: Any?) {
         navigate(Screen.PlayerFull)
     }
-
 
     override fun goProfileScreen(arg: Any?) {
         navigate(Screen.Profile)
@@ -47,4 +51,5 @@ class RouterImpl(
             }
         }
     }
+
 }

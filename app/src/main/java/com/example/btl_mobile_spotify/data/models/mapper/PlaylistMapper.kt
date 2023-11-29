@@ -11,6 +11,7 @@ class PlaylistMapper @Inject constructor() : Mapper<PlaylistDTO, Playlist> {
         id = network.id,
         name = network.name,
         userID = network.userID,
+        listMusicId = network.listMusicId
     )
 
     override fun toDomainList(networks: List<PlaylistDTO>): List<Playlist> = networks.map {
@@ -21,6 +22,7 @@ class PlaylistMapper @Inject constructor() : Mapper<PlaylistDTO, Playlist> {
         id = domain.id,
         name = domain.name,
         userID = domain.userID,
+        listMusicId = domain.listMusicId,
     )
 
     override fun toNetworkList(domains: List<Playlist>): List<PlaylistDTO> = domains.map {

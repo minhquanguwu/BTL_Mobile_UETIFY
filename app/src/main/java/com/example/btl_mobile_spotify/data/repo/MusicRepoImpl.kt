@@ -22,6 +22,10 @@ class MusicRepoImpl @Inject constructor(
 
     override fun getAllSongsFlow(query: String) = musicDb.getAllSongsFlow(query)
 
+    override suspend fun addSongToPlaylist(song: Music, playlist: Playlist) {
+        musicDb.addSongToPlaylist(playlist.id, song.id)
+    }
+
     override suspend fun fetchAllMusic(): Flow<Resource<Unit>> = flow {
         emit(Resource.Loading())
         val musicResource = musicDataSource.getAllMusic()

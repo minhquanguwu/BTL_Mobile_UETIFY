@@ -5,6 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import com.example.btl_mobile_spotify.data.models.local.Music
 import com.example.btl_mobile_spotify.data.models.local.Playlist
 import kotlinx.coroutines.flow.Flow
@@ -27,4 +29,18 @@ interface PlaylistDao {
 
     @Delete
     suspend fun deleteAllPlaylists(playlist: Playlist)
+
+    @Update
+    suspend fun updatePlaylist(playlist: Playlist)
+    @Transaction
+    suspend fun addSongToPlaylist(playlistId: String, songId: String) {
+        val playlist = getPlaylistById(playlistId)
+        if (playlist != null) {
+            val updatedList = playlist.listMusicId.toMutableList().apply {
+                add(songId)
+            }
+            val updatedPlaylist = playlist.copy(listMusicId = updatedList)
+            updatePlaylist(updatedPlaylist)
+        }
+    }
 }

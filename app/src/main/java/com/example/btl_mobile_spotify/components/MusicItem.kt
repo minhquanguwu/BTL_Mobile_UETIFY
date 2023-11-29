@@ -39,7 +39,7 @@ fun MusicItem(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colors.background,
     shape: Shape = RoundedCornerShape(8.dp),
-    onItemClick: (Music) -> Unit
+    onItemClick: (Music) -> Unit,
 ) {
     Card(
         onClick = { onItemClick(music) },
@@ -88,7 +88,9 @@ fun MusicItem(
             Column {
                 IconBtn(resIcon = R.drawable.ic_dots, onClick = {showMenu = !showMenu})
                 DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                    DropdownMenuItem(onClick = { /*TODO*/ }) {
+                    DropdownMenuItem(onClick = {
+
+                    }) {
                         Text("Add to playlist", style = MaterialTheme.typography.body1)
                     }
                     DropdownMenuItem(onClick = { /*TODO*/ }) {
@@ -111,9 +113,9 @@ private fun MusicItemPreview() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(64.dp),
-            color = MaterialTheme.colors.surface
-        ) {
-        }
+            color = MaterialTheme.colors.surface,
+            onItemClick = {},
+        )
     }
 }
 

@@ -176,7 +176,8 @@ fun MusicPlayerScreen(
                             color = Color.White,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
+                            lineHeight = 35.sp,
                         )
                     }
                 }

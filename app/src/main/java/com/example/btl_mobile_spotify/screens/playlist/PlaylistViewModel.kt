@@ -4,11 +4,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.btl_mobile_spotify.data.models.local.Music
 import com.example.btl_mobile_spotify.data.models.local.Playlist
 import com.example.btl_mobile_spotify.data.repo.MusicRepo
 import com.example.btl_mobile_spotify.exoplayer.MusicServiceConnection
 import com.example.btl_mobile_spotify.screens.libraryscreen.LibraryScreenState
 import com.example.btl_mobile_spotify.utils.Dispatcher
+import com.example.btl_mobile_spotify.utils.MusicUseCase
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PlaylistViewModel @Inject constructor(
     private val musicRepo: MusicRepo,
+    private val musicUseCase: MusicUseCase,
     private val dispatcher: Dispatcher,
 ): ViewModel() {
     val user = Firebase.auth.currentUser
@@ -33,12 +36,18 @@ class PlaylistViewModel @Inject constructor(
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
+
     private val playlistList = searchQuery.flatMapLatest {
         musicRepo.getAllPlaylistsFlow(it)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+    private val musicList = searchQuery.flatMapLatest {
+        musicRepo.getAllSongsFlow(it)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
     init {
         collectAllPlaylist()
+        collectSongs()
     }
     fun collectAllPlaylist() = viewModelScope.launch(dispatcher.main) {
         musicRepo.fetchAllPlaylist().collectLatest {  }
@@ -52,5 +61,30 @@ class PlaylistViewModel @Inject constructor(
         musicRepo.uploadPlaylist(playlist).collectLatest {
             Timber.d("${playlist.name} - ${it.javaClass}")
         }
+    }
+
+    fun getCurrentPlaylist(playlist: Playlist) {
+        _uiState.value = uiState.value.copy(currentPlaylist = playlist)
+        _uiState.value = uiState.value.copy(currentMusicList = getSonglist())
+
+    }
+
+    private fun collectSongs() = viewModelScope.launch(dispatcher.main) {
+        musicList.collectLatest {
+            _uiState.value = uiState.value.copy(musicList = it)
+        }
+    }
+
+    private fun getSonglist() : List<Music> {
+        val playlist = uiState.value.currentPlaylist
+        val songList = uiState.value.musicList
+        return songList.filter { music ->
+            playlist.listMusicId.contains(music.id)
+        }
+
+    }
+
+    fun addSongToPlaylist(song: Music, playlist: Playlist) = viewModelScope.launch(dispatcher.main) {
+        musicRepo.addSongToPlaylist(song, playlist)
     }
 }

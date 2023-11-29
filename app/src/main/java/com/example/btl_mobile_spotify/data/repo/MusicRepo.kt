@@ -31,4 +31,6 @@ interface MusicRepo {
     suspend fun insertPlaylists(playlists: List<Playlist>)
     suspend fun cachePlaylist(playlists: List<Playlist>)
 
+    suspend fun addSongToPlaylist(song: Music, playlist: Playlist)
+
 }

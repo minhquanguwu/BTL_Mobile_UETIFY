@@ -8,10 +8,12 @@ val samplePlaylist = listOf(
         id = UUID.randomUUID().toString(),
         name = "Playlist 1",
         userID = "minh quang",
+        listMusicId = listOf("Around the World (La La La La La)","Nối Vòng Tay Lớn")
     ),
     Playlist(
         id = UUID.randomUUID().toString(),
         name = "Playlist 2",
         userID = "peter",
+        listMusicId = listOf("Around the World (La La La La La)","Nối Vòng Tay Lớn")
     ),
 )

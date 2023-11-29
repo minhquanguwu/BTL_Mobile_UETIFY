@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import com.example.btl_mobile_spotify.R
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_HOME
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_LIBS
+import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_LISTSONGINPLAYLIST
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_PLAYER_FULL
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_PLAYLIST
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_PREMIUM
@@ -23,6 +24,8 @@ object Routes {
     const val ROUTE_SIGNUP = "ROUTE_SIGNUP"
     const val ROUTE_START = "ROUTE_START"
     const val ROUTE_PLAYLIST = "ROUTE_PLAYLIST"
+    const val ROUTE_LISTSONGINPLAYLIST = "ROUTE_PLAYLIST_SONGLIST"
+
 
     val fullScreenRoutes = listOf(
         ROUTE_SPLASH,
@@ -45,6 +48,7 @@ sealed class Screen(
     object Search : Screen(route = ROUTE_SEARCH, title = "Search", icon = R.drawable.ic_search_big)
     object Libs : Screen(route = ROUTE_LIBS, title = "Your Library", icon = R.drawable.ic_library_big)
     object Playlist : Screen(route = ROUTE_PLAYLIST, title = "Your Playlist")
+    object ListSongInPlaylist : Screen(route = ROUTE_LISTSONGINPLAYLIST, title = "List songs in Playlist")
 
     object Premium : Screen(route = ROUTE_PREMIUM, title = "Premium", icon = R.drawable.ic_premium)
     object Splash : Screen(route = ROUTE_SPLASH)

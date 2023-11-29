@@ -14,4 +14,6 @@ data class Music(
     val musicUrl: String,
     val genre: String,
     val lyrics: String
-)
+) {
+    constructor() : this("", "", 0, emptyList(),"","","","")
+}

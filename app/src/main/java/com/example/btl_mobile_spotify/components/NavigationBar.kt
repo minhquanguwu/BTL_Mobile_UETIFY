@@ -27,7 +27,7 @@ fun NavigationBar(
         )
     }
     BottomNavigation(
-        backgroundColor = Color.Transparent,
+        backgroundColor = Color.Black,
         contentColor = Color.Transparent,
         elevation = 0.dp
     ) {

@@ -25,5 +25,6 @@ class RoomMusicDataSource @Inject constructor(private val musicDao: MusicDao, pr
     suspend fun insertPlaylist(playlists: List<Playlist>) = playlistDao.insertPlaylist(playlists)
     suspend fun deleteAllPlaylists() = playlistDao.deleteAllPlaylists()
     suspend fun deleteSong(playlist: Playlist) = playlistDao.deleteAllPlaylists(playlist)
+    suspend fun addSongToPlaylist(playlistId : String, songId : String) = playlistDao.addSongToPlaylist(playlistId, songId)
 
 }

@@ -191,12 +191,12 @@ fun StartScreen(navController: NavHostController,
                     Spacer(modifier = Modifier
                         .fillMaxWidth()
                         .height(49.dp));
-//                    signInWithFb(
-//                        onSignInFail = {
-//                            Toast.makeText(context, "Try again", Toast.LENGTH_SHORT).show()
-//                        },
-//                        onSignedIn = {navController.navigate(Screen.Home.route)}
-//                    )
+                    signInWithFb(
+                        onSignInFail = {
+                            Toast.makeText(context, "Try again", Toast.LENGTH_SHORT).show()
+                        },
+                        onSignedIn = {navController.navigate(Screen.Home.route)}
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(6.dp))

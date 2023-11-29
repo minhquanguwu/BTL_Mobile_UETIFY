@@ -48,11 +48,12 @@ import com.example.btl_mobile_spotify.components.PlaylistTopBar
 import com.example.btl_mobile_spotify.data.models.local.Music
 import com.example.btl_mobile_spotify.data.models.local.Playlist
 import com.example.btl_mobile_spotify.data.models.remote.MusicDTO
+import com.example.btl_mobile_spotify.navigation.Router
 import com.example.btl_mobile_spotify.utils.getArtistsString
 import java.util.UUID
 
 @Composable
-fun PlaylistScreen(viewModel: PlaylistViewModel = hiltViewModel()) {
+fun PlaylistScreen(viewModel: PlaylistViewModel = hiltViewModel(), router : Router) {
     var showDialog by remember{mutableStateOf(false)}
     val scrollState = rememberLazyListState()
     val uiState by viewModel.uiState
@@ -66,7 +67,7 @@ fun PlaylistScreen(viewModel: PlaylistViewModel = hiltViewModel()) {
         if(showDialog) {
             CreateAlbumDialog(onDialogDismiss = { showDialog =!showDialog },
                 onCreateAlbum = {
-                    val playlist = Playlist(name = it, id = UUID.randomUUID().toString(), userID = viewModel.user?.uid.toString())
+                    val playlist = Playlist(name = it, id = UUID.randomUUID().toString(), userID = viewModel.user?.uid.toString(), listMusicId = emptyList())
                     viewModel.uploadPlaylist(playlist)
                     viewModel.collectAllPlaylist()
                     showDialog =!showDialog
@@ -75,6 +76,8 @@ fun PlaylistScreen(viewModel: PlaylistViewModel = hiltViewModel()) {
         LazyColumn(state = scrollState) {
             items(playlistList) {playlist ->
                 PlaylistItem(playlist) {
+                    viewModel.getCurrentPlaylist(playlist)
+                    router.goListSongInPlaylistScreen(playlist)
 
                 }
             }
@@ -137,6 +140,7 @@ fun CreateAlbumDialog(
 @Composable
 fun PlaylistItem(
     playlist: Playlist,
+    isShow : Boolean = false,
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colors.background,
     shape: Shape = RoundedCornerShape(8.dp),
@@ -183,5 +187,4 @@ fun PlaylistItem(
         }
     }
 }
-
 

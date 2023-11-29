@@ -8,5 +8,7 @@ import com.google.firebase.ktx.Firebase
 data class PlaylistScreenState(
     val playlistList: List<Playlist> = emptyList(),
     val musicList: List<Music> = emptyList(),
+    val currentPlaylist: Playlist = Playlist(),
+    val currentMusicList: List<Music> = emptyList()
 //    val user : FirebaseUser?
 )

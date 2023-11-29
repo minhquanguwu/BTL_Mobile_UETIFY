@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +32,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.TextField
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
@@ -78,7 +80,7 @@ fun SignUpScreen(navController: NavHostController,
                 .background(color = Color(0xFF121212))
         ) {
             Column(
-                //horizontalAlignment = Alignment.CenterHorizontally,
+//                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
@@ -134,9 +136,9 @@ fun SignUpScreen(navController: NavHostController,
                         textAlign = TextAlign.Start,
                     ),
                     modifier = Modifier
-                        .width(300.dp)
+                        .width(320.dp)
                         .height(27.dp)
-                        .padding(start = 40.dp)
+                        .align(CenterHorizontally)
                 )
                 TextField(
                     value = name,
@@ -154,9 +156,9 @@ fun SignUpScreen(navController: NavHostController,
                                 textAlign = TextAlign.Start,
                             ))},
                     modifier = Modifier
-                        .width(350.dp)
+                        .width(320.dp)
                         .height(50.dp)
-                        .padding(start = 40.dp)
+                        .align(CenterHorizontally)
                         .background(
                             color = Color(0xFF777777),
                             shape = RoundedCornerShape(size = 5.dp)
@@ -173,8 +175,8 @@ fun SignUpScreen(navController: NavHostController,
                             textAlign = TextAlign.Start,
                         ),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 40.dp)
+                            .width(320.dp)
+                            .align(CenterHorizontally)
                     )
                 }
                 Spacer(modifier = Modifier.height(12.dp))
@@ -188,12 +190,12 @@ fun SignUpScreen(navController: NavHostController,
                         textAlign = TextAlign.Start,
                     ),
                     modifier = Modifier
-                        .width(300.dp)
+                        .width(320.dp)
                         .height(27.dp)
-                        .padding(start = 40.dp)
+                        .align(CenterHorizontally)
                 )
                 TextField(
-                    value = email,
+                    value = email.trim(),
                     onValueChange = {
                         email = it
                         signUpViewModel.onEvent(SignUpUIEvent.EmailChanged(it))
@@ -208,9 +210,9 @@ fun SignUpScreen(navController: NavHostController,
                                 textAlign = TextAlign.Start,
                             ))},
                     modifier = Modifier
-                        .width(350.dp)
+                        .width(320.dp)
                         .height(50.dp)
-                        .padding(start = 40.dp)
+                        .align(CenterHorizontally)
                         .background(
                             color = Color(0xFF777777),
                             shape = RoundedCornerShape(size = 5.dp)
@@ -227,8 +229,8 @@ fun SignUpScreen(navController: NavHostController,
                             textAlign = TextAlign.Start,
                         ),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 40.dp)
+                            .width(320.dp)
+                            .align(CenterHorizontally)
                     )
                 }
                 if (signUpViewModel.isSignedUpFail.value == true) {
@@ -242,8 +244,8 @@ fun SignUpScreen(navController: NavHostController,
                             textAlign = TextAlign.Start,
                         ),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 40.dp)
+                            .width(320.dp)
+                            .align(CenterHorizontally)
                     )
                 }
                 Spacer(modifier = Modifier.height(12.dp))
@@ -257,9 +259,10 @@ fun SignUpScreen(navController: NavHostController,
                         textAlign = TextAlign.Start,
                     ),
                     modifier = Modifier
-                        .width(300.dp)
+                        .width(320.dp)
                         .height(27.dp)
-                        .padding(start = 40.dp)
+//                        .align(CenterHorizontally)
+                        .align(CenterHorizontally)
                 )
                 TextField(
                     value = password,
@@ -286,13 +289,12 @@ fun SignUpScreen(navController: NavHostController,
                     visualTransformation = if(passwordVisibility) VisualTransformation.None
                             else PasswordVisualTransformation(),
                     modifier = Modifier
-                        .width(350.dp)
+                        .width(320.dp)
                         .height(50.dp)
-                        .padding(start = 40.dp)
                         .background(
                             color = Color(0xFF777777),
                             shape = RoundedCornerShape(size = 5.dp)
-                        )
+                        ).align(CenterHorizontally)
                 )
                 if (signUpViewModel.isPasswordValid.value == false) {
                     Text(
@@ -305,8 +307,8 @@ fun SignUpScreen(navController: NavHostController,
                             textAlign = TextAlign.Start,
                         ),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 40.dp)
+                            .width(320.dp)
+                            .align(CenterHorizontally)
                     )
                 }
                 Spacer(modifier = Modifier.height(24.dp))

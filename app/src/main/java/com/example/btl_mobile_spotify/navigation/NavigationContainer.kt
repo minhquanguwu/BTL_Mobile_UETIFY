@@ -2,6 +2,7 @@ package com.example.btl_mobile_spotify.navigation
 
 import android.app.Activity
 import android.content.Context
+import android.support.v4.media.MediaMetadataCompat
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
@@ -12,12 +13,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.btl_mobile_spotify.data.models.local.Playlist
+import com.example.btl_mobile_spotify.exoplayer.MusicServiceConnection
 import com.example.btl_mobile_spotify.screens.homescreen.HomeScreen
 import com.example.btl_mobile_spotify.screens.libraryscreen.LibsScreen
 import com.example.btl_mobile_spotify.screens.LoginScreen
@@ -26,13 +31,17 @@ import com.example.btl_mobile_spotify.screens.ProfileScreen
 import com.example.btl_mobile_spotify.screens.searchscreen.SearchScreen
 import com.example.btl_mobile_spotify.screens.SignUpScreen
 import com.example.btl_mobile_spotify.screens.SplashScreen
+import com.example.btl_mobile_spotify.screens.homescreen.HomeViewModel
 import com.example.btl_mobile_spotify.screens.playerfullscreen.MusicPlayerScreen
+import com.example.btl_mobile_spotify.screens.playlist.ListSongInPlaylistScreen
 import com.example.btl_mobile_spotify.screens.playlist.PlaylistScreen
+import com.example.btl_mobile_spotify.screens.playlist.PlaylistViewModel
 import com.example.btl_mobile_spotify.screens.sign_in.StartScreen
 import com.example.btl_mobile_spotify.screens.sign_in.additional_method.AdditionalSignInViewModel
 import com.example.btl_mobile_spotify.screens.sign_in.additional_method.GoogleAuthUiClient
 import com.example.btl_mobile_spotify.screens.sign_in.native_method.NativeLoginViewModel
 import com.example.btl_mobile_spotify.screens.sign_up.SignUpViewModel
+import com.example.btl_mobile_spotify.utils.MusicUseCase
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.auth.ktx.auth
@@ -47,7 +56,7 @@ fun NavigationContainer(
     navController: NavHostController,
     paddingValues: PaddingValues,
     context: Context,
-    lifecycleScope: LifecycleCoroutineScope
+    lifecycleScope: LifecycleCoroutineScope,
 ) {
 
     val startDestination = remember { mutableStateOf(Screen.Splash.route) }
@@ -63,6 +72,9 @@ fun NavigationContainer(
         )
     }
     val nativeLoginViewModel = NativeLoginViewModel(navController)
+    val musicConnection = MusicServiceConnection(context)
+    val playlistViewModel: PlaylistViewModel = hiltViewModel()
+
     NavHost(navController = navController, startDestination = startDestination.value) {
         composable(Screen.Home.route) {
             HomeScreen(paddingValues, router)
@@ -74,7 +86,10 @@ fun NavigationContainer(
             LibsScreen(paddingValues, router)
         }
         composable((Screen.Playlist.route)){
-            PlaylistScreen()
+            PlaylistScreen(router = router, viewModel = playlistViewModel)
+        }
+        composable((Screen.ListSongInPlaylist.route)){
+            ListSongInPlaylistScreen(router = router, viewModel = playlistViewModel)
         }
         composable(Screen.Premium.route) {
             PremiumScreen(paddingValues)
@@ -97,6 +112,7 @@ fun NavigationContainer(
                     Firebase.auth.signOut()
                     LoginManager.getInstance().logOut()
                     navController.navigate(Screen.Start.route)
+                    musicConnection.pause()
                 }, navController
             )
         }

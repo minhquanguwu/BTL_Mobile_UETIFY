@@ -4,4 +4,5 @@ data class PlaylistDTO (
     val id : String = "",
     val name: String = "",
     val userID: String ="",
+    val listMusicId: List<String> = emptyList()
 )
