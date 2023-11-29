@@ -65,7 +65,7 @@ class NativeLoginViewModel(private val navController: NavController) : ViewModel
 
     private fun login() {
         loginInProgress.value = true
-        val email = nativeLoginUIState.value.email
+        val email = nativeLoginUIState.value.email.trim()
         val password = nativeLoginUIState.value.password
 
         FirebaseAuth

@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.btl_mobile_spotify.R
@@ -29,9 +30,9 @@ fun SplashScreen(goBack: () -> Unit = {}) {
     Box(modifier = Modifier.fillMaxSize()) {
         Icon(
             modifier = Modifier.align(Alignment.Center),
-            painter = painterResource(id = R.drawable.ic_spotify),
+            painter = painterResource(id = R.drawable.ic_splash),
             contentDescription = null,
-            tint = Active
+            tint = Color.Unspecified
         )
     }
 }

@@ -117,11 +117,11 @@ fun LoginScreen(navController: NavHostController,
                         textAlign = TextAlign.Start,
                     ),
                     modifier = Modifier
-                        .width(300.dp)
-                        .height(27.dp).padding(start = 40.dp)
+                        .width(320.dp)
+                        .height(27.dp).align(CenterHorizontally)
                 )
                 TextField(
-                    value = username,
+                    value = username.trim(),
                     onValueChange = {
                         username = it
                         nativeLoginViewModel.onEvent(NativeLoginUIEvent.EmailChanged(it))
@@ -136,8 +136,8 @@ fun LoginScreen(navController: NavHostController,
                                 textAlign = TextAlign.Start,
                         ))},
                     modifier = Modifier
-                        .width(350.dp)
-                        .height(50.dp).padding(start = 40.dp)
+                        .width(320.dp)
+                        .height(50.dp).align(CenterHorizontally)
                         .background(color = Color(0xFF777777),
                             shape = RoundedCornerShape(size = 5.dp)
                     )
@@ -153,8 +153,8 @@ fun LoginScreen(navController: NavHostController,
                         textAlign = TextAlign.Start,
                     ),
                     modifier = Modifier
-                        .width(300.dp)
-                        .height(27.dp).padding(start = 40.dp)
+                        .width(320.dp)
+                        .height(27.dp).align(CenterHorizontally)
                 )
                 TextField(
                     value = password,
@@ -181,8 +181,8 @@ fun LoginScreen(navController: NavHostController,
                     visualTransformation = if(passwordVisibility) VisualTransformation.None
                     else PasswordVisualTransformation(),
                     modifier = Modifier
-                        .width(350.dp)
-                        .height(50.dp).padding(start = 40.dp)
+                        .width(320.dp)
+                        .height(50.dp).align(CenterHorizontally)
                         .background(color = Color(0xFF777777),
                             shape = RoundedCornerShape(size = 5.dp))
                 )
@@ -199,8 +199,8 @@ fun LoginScreen(navController: NavHostController,
                             textAlign = TextAlign.Start,
                         ),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 40.dp)
+                            .width(320.dp)
+                            .align(CenterHorizontally)
                     )
                 }
                 Button(
