@@ -10,7 +10,7 @@ class RouterImpl(
     private val startDestination: String = ROUTE_HOME
 ) : Router  {
     override fun goHome() {
-        TODO("Not yet implemented")
+        navigate(Screen.Home)
     }
 
     override fun goAddToPlaylistScreen(arg: Any?) {
@@ -40,7 +40,7 @@ class RouterImpl(
         arg: Any? = null
     ) {
         navHostController.apply {
-            navigate("${screen.route}/${arg}") {
+            navigate(if (arg != null) "${screen.route}/${arg}" else screen.route) {
                 if (removeFromHistory) {
                     if (singleTop) {
                         popUpTo(Screen.Home.route)
