@@ -2,6 +2,7 @@ package com.example.btl_mobile_spotify.navigation
 
 import androidx.annotation.DrawableRes
 import com.example.btl_mobile_spotify.R
+import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_CATEGORY
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_HOME
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_LIBS
 import com.example.btl_mobile_spotify.navigation.Routes.ROUTE_PLAYER_FULL
@@ -23,6 +24,7 @@ object Routes {
     const val ROUTE_SIGNUP = "ROUTE_SIGNUP"
     const val ROUTE_START = "ROUTE_START"
     const val ROUTE_PLAYLIST = "ROUTE_PLAYLIST"
+    const val ROUTE_CATEGORY = "ROUTE_CATEGORY"
 
     val fullScreenRoutes = listOf(
         ROUTE_SPLASH,
@@ -43,6 +45,7 @@ sealed class Screen(
 ) {
     object Home : Screen(route = ROUTE_HOME, title = "Home", icon = R.drawable.ic_home_filled)
     object Search : Screen(route = ROUTE_SEARCH, title = "Search", icon = R.drawable.ic_search_big)
+    object Category: Screen(route = ROUTE_CATEGORY, title = "Category")
     object Libs : Screen(route = ROUTE_LIBS, title = "Your Library", icon = R.drawable.ic_library_big)
     object Playlist : Screen(route = ROUTE_PLAYLIST, title = "Your Playlist")
 

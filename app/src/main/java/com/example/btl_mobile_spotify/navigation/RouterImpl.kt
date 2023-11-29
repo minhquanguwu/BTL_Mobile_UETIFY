@@ -15,6 +15,10 @@ class RouterImpl(
         navigate(Screen.Playlist)
     }
 
+    override fun goCategory(arg: Any?) {
+        navigate(Screen.Category, arg = arg)
+    }
+
     override fun goPlayerFull(arg: Any?) {
         navigate(Screen.PlayerFull)
     }
@@ -27,10 +31,11 @@ class RouterImpl(
     private fun navigate(
         screen: Screen,
         removeFromHistory: Boolean = false,
-        singleTop: Boolean = false
+        singleTop: Boolean = false,
+        arg: Any? = null
     ) {
         navHostController.apply {
-            navigate(screen.route) {
+            navigate("${screen.route}/${arg}") {
                 if (removeFromHistory) {
                     if (singleTop) {
                         popUpTo(Screen.Home.route)

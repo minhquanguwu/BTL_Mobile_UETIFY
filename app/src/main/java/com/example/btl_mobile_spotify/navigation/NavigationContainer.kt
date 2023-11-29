@@ -26,6 +26,7 @@ import com.example.btl_mobile_spotify.screens.ProfileScreen
 import com.example.btl_mobile_spotify.screens.searchscreen.SearchScreen
 import com.example.btl_mobile_spotify.screens.SignUpScreen
 import com.example.btl_mobile_spotify.screens.SplashScreen
+import com.example.btl_mobile_spotify.screens.category.CategoryScreen
 import com.example.btl_mobile_spotify.screens.playerfullscreen.MusicPlayerScreen
 import com.example.btl_mobile_spotify.screens.playlist.PlaylistScreen
 import com.example.btl_mobile_spotify.screens.sign_in.StartScreen
@@ -68,7 +69,10 @@ fun NavigationContainer(
             HomeScreen(paddingValues, router)
         }
         composable(Screen.Search.route) {
-            SearchScreen(paddingValues)
+            SearchScreen(router)
+        }
+        composable("${Screen.Category.route}/{genre}") { backStackEntry ->
+            CategoryScreen(backStackEntry.arguments?.getString("genre"))
         }
         composable(Screen.Libs.route) {
             LibsScreen(paddingValues, router)

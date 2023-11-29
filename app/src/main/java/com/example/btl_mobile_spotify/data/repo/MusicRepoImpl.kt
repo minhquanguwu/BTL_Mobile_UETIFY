@@ -53,7 +53,7 @@ class MusicRepoImpl @Inject constructor(
         emit(musicResource.mapToUnit())
     }
     override suspend fun getAllSongs() = musicDb.getAllSongs()
-
+    override fun getSongByGenre(genre: String) = musicDb.getSongByGenre(genre)
     override suspend fun insertSongs(songs: List<Music>) = musicDb.insertSong(songs)
 
     override suspend fun deleteSong(song: Music) = musicDb.deleteSong(song)

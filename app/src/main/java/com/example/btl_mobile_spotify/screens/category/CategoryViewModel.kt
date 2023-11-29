@@ -1,4 +1,4 @@
-package com.example.btl_mobile_spotify.screens.searchscreen
+package com.example.btl_mobile_spotify.screens.category
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class SearchViewModel @Inject constructor(
+class CategoryViewModel @Inject constructor(
     private val musicRepo: MusicRepo,
     private val musicUseCase: MusicUseCase,
     private val dispatcher: Dispatcher
@@ -30,49 +30,28 @@ class SearchViewModel @Inject constructor(
         collectSongs()
     }
 
-    private val _uiState = mutableStateOf(SearchScreenState())
-    val uiState: State<SearchScreenState> = _uiState
+    private val _uiState = mutableStateOf(CategoryScreenState())
+    val uiState: State<CategoryScreenState> = _uiState
 
-    private val _genreList = MutableStateFlow(allGenres)
-    val genreList = _genreList.asStateFlow()
+    private val _genre  = MutableStateFlow("")
+    val genre = _genre.asStateFlow()
 
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery = _searchQuery.asStateFlow()
-
-    private val _isSearching = MutableStateFlow(false)
-    val isSearching = _isSearching.asStateFlow()
-
-    private val musicList = searchQuery.flatMapLatest {
-        musicRepo.getAllSongsFlow(it)
+    private val musicListByGenre = genre.flatMapLatest {
+        musicRepo.getSongByGenre(it)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    fun onSearchTextChange(query: String) {
-        _searchQuery.value = query
+    private fun collectSongs() = viewModelScope.launch(dispatcher.main) {
+        musicRepo.fetchAllMusic()
+        musicListByGenre.collectLatest {
+            _uiState.value = uiState.value.copy(musicListByGenre = it)
+        }
     }
 
-    fun clearSearchText() {
-        _searchQuery.value = ""
+    fun onGenreChange(genre: String) {
+        _genre.value = genre
     }
 
     fun onMusicListItemPressed(music: Music) = viewModelScope.launch(dispatcher.main) {
         musicUseCase.playPause(music.id)
     }
-
-    private fun collectSongs() = viewModelScope.launch(dispatcher.main) {
-        musicRepo.fetchAllMusic()
-        musicList.collectLatest {
-            _uiState.value = uiState.value.copy(musicList = it)
-        }
-    }
 }
-
-private val allGenres = listOf(
-    "Pop",
-    "Dance",
-    "Rap",
-    "Hip-Hop",
-    "Rock",
-    "Classical",
-    "Indie",
-    "Country"
-)

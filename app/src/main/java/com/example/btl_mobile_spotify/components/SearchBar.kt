@@ -80,12 +80,7 @@ fun SearchBar(
             },
             trailingIcon = {
                 if (hasTrailingIcon) {
-                    if(isFocused) {
-                        IconButton(onClick = { viewModel.clearSearchText() }) {
-                            Icon(Icons.Outlined.Clear, contentDescription = "Clear text")
-                        }
-                    }
-                    else {
+                    if(!isFocused) {
                         IconBtn(
                             resIcon = R.drawable.ic_shazam,
                             tint = Color.Unspecified,
@@ -103,6 +98,11 @@ fun SearchBar(
                                 }
                             }
                         )
+                    }
+                    else if(searchText.isNotBlank()){
+                        IconButton(onClick = { viewModel.clearSearchText() }) {
+                            Icon(Icons.Outlined.Clear, contentDescription = "Clear text")
+                        }
                     }
                 }
             }

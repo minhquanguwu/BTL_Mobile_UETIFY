@@ -4,7 +4,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,21 +27,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.btl_mobile_spotify.components.MusicItem
 import com.example.btl_mobile_spotify.components.SearchBar
 import com.example.btl_mobile_spotify.data.models.local.Music
-import com.example.btl_mobile_spotify.ui.theme.BTL_Mobile_SpotifyTheme
+import com.example.btl_mobile_spotify.navigation.Router
 import kotlin.random.Random
 
 @Composable
-fun SearchScreen(paddingValues: PaddingValues = PaddingValues(), viewModel: SearchViewModel = hiltViewModel()) {
+fun SearchScreen(router: Router?, viewModel: SearchViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState
     val songs = uiState.musicList
-    val genres by viewModel.genres.collectAsState()
+    val genreList by viewModel.genreList.collectAsState()
 
     val interactionSource = remember { MutableInteractionSource() }
     val searchInFocus by interactionSource.collectIsFocusedAsState()
@@ -58,7 +56,7 @@ fun SearchScreen(paddingValues: PaddingValues = PaddingValues(), viewModel: Sear
         if (searchInFocus) {
             SearchResults(songs)
         } else {
-            Categories(genres)
+            Categories(genreList, router)
         }
     }
 }
@@ -89,7 +87,7 @@ fun SearchResults(songs: List<Music>) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Categories(genres: List<String>) {
+fun Categories(genres: List<String>, router: Router?) {
     Text(
         "Browse Categories",
         fontWeight = FontWeight.ExtraBold
@@ -109,7 +107,9 @@ fun Categories(genres: List<String>) {
                 modifier = Modifier
                     .padding(5.dp)
                     .height(100.dp),
-                onClick = {},
+                onClick = {
+                    router?.goCategory(genre)
+                },
                 backgroundColor = randomColor
             ) {
                 Text(
@@ -120,14 +120,6 @@ fun Categories(genres: List<String>) {
                 )
             }
         }
-    }
-}
-
-@Composable
-@Preview
-fun SearchScreenPreview() {
-    BTL_Mobile_SpotifyTheme {
-        SearchScreen()
     }
 }
 

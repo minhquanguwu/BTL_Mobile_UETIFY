@@ -12,6 +12,8 @@ interface MusicRepo {
 
     suspend fun getSongById(id: String): Music
 
+    fun getSongByGenre(genre: String): Flow<List<Music>>
+
     suspend fun insertSongs(songs: List<Music>)
 
     suspend fun uploadSong(music: Music): Flow<Resource<Unit>>
