@@ -87,7 +87,7 @@ fun NavigationContainer(
             )
         }
         composable(Screen.PlayerFull.route) {
-            MusicPlayerScreen()
+            MusicPlayerScreen(router = router)
         }
         composable(Screen.Profile.route) {
             ProfileScreen(

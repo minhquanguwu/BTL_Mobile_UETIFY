@@ -8,7 +8,7 @@ class RouterImpl(
     private val startDestination: String = ROUTE_HOME
 ) : Router  {
     override fun goHome() {
-        TODO("Not yet implemented")
+        navigate(Screen.Home)
     }
 
     override fun goAddToPlaylistScreen(arg: Any?) {

@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
 //        sampleMusicList.subList(0, sampleMusicList.size).forEach {
 //            uploadMusic(it)
 //        }
-        setUp()
+//        setUp()
         collectSongs()
         collectCurrentSong()
         collectPlayBackState()

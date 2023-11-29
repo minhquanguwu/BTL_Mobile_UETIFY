@@ -61,15 +61,19 @@ import com.example.btl_mobile_spotify.components.RoundImageButton
 import com.example.btl_mobile_spotify.components.TextSubtitle
 import com.example.btl_mobile_spotify.components.TextTitle
 import com.example.btl_mobile_spotify.components.TopBar
+import com.example.btl_mobile_spotify.navigation.Router
 import com.example.btl_mobile_spotify.utils.Ext
 import com.example.btl_mobile_spotify.utils.Ext.gradient
+import okhttp3.Route
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MusicPlayerScreen(
     modifier: Modifier = Modifier,
+    router: Router? = null,
     viewModel: MusicPlayerViewModel = hiltViewModel(),
-    ) {
+
+ ) {
     Log.d("Song", "${viewModel.uiState.value.songName}")
     val scrollState = rememberScrollState()
     val sliderPosition = remember { mutableStateOf(0f) }
@@ -96,7 +100,7 @@ fun MusicPlayerScreen(
     ) {
         TopBar(
             navigationIcon = {
-                IconBtn(resIcon = R.drawable.ic_down)
+                IconBtn(resIcon = R.drawable.ic_down, onClick = {router?.goHome()})
             },
             title = {
                 Column(
@@ -164,7 +168,7 @@ fun MusicPlayerScreen(
                 ) {
                     item {
                         Text(
-                            text = viewModel.uiState.value.lyrics,
+                            text = if(viewModel.uiState.value.lyrics != "")viewModel.uiState.value.lyrics else "Lyrics not found...",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp),
