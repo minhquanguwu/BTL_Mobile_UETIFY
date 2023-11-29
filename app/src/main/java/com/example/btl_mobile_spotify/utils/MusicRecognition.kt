@@ -1,5 +1,6 @@
 package com.example.btl_mobile_spotify.utils
 
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -73,13 +74,13 @@ class MusicRecognition(val context: Context) : IACRCloudListener {
         startTime = System.currentTimeMillis()
 
         //TODO: Show result
-        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+
         val song = result?.let { handleResult(it) }
-        if (result != null) {
-            Log.d("Result", result)
+        if (song != null) {
+            showSongInfoDialog(song)
         }
         if (song != null) {
-            Log.d("Song", song)
+            showErrorDialog("No song found")
         }
 
         cancel()
@@ -114,6 +115,30 @@ class MusicRecognition(val context: Context) : IACRCloudListener {
 
         return res
     }
+
+    private fun showSongInfoDialog(songInfo: String) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Recognized Song:")
+            .setMessage(songInfo)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+    private fun showErrorDialog(errorMessage: String) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Error")
+            .setMessage(errorMessage)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
 
     override fun onVolumeChanged(curVolume: Double) {}
 

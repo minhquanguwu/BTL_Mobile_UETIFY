@@ -79,7 +79,9 @@ fun SongList(viewModel : HomeViewModel, musicList : List<Music>) {
                     TextTitle("Add ${tempMusic.title}" )
                     Divider(modifier = Modifier.fillMaxWidth(), color = Color.White, thickness = 3.dp)
                     viewModel.uiState.value.playlistList.forEach { playlist ->
-                        var checked = playlist.listMusicId.contains(tempMusic.id)
+                        var checked by remember {
+                            mutableStateOf(playlist.listMusicId.contains(tempMusic.id))
+                        }
                         Log.d("Checkbox", "${playlist.listMusicId.contains(tempMusic.id)} ${tempMusic.id} ${playlist.listMusicId}")
                         Row(
                             modifier = Modifier
@@ -104,6 +106,7 @@ fun SongList(viewModel : HomeViewModel, musicList : List<Music>) {
                             Checkbox(
                                 colors = CheckboxDefaults.colors(uncheckedColor = Color.DarkGray, checkedColor = Color.White),
                                 checked = checked, onCheckedChange = {checkValue ->
+                                    Log.d("Checkbox","${tempMusic.title}")
                                     checked = checkValue
                                     if (checked) {
                                         if (!playlist.listMusicId.contains(tempMusic.id)) {
@@ -127,9 +130,6 @@ fun SongList(viewModel : HomeViewModel, musicList : List<Music>) {
                                 }, modifier = Modifier.weight(1f))
                         }
                     }
-                }
-                Button(onClick = { /*TODO*/ }, modifier = Modifier.align(Alignment.BottomCenter)) {
-                    TextTitle("OK")
                 }
             }
         },

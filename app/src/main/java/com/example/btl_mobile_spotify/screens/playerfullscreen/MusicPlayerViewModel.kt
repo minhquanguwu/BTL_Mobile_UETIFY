@@ -48,7 +48,6 @@ class MusicPlayerViewModel @Inject constructor(
     )
     val musicControlButtonState: State<MusicControlButtonState> = _musicControlButtonState
     var isLoopAvailable = false
-//    var isLoopAvailable = mutableStateOf(false)
     init {
 //        setMusicControlButtonState()
         setMusicSliderState()

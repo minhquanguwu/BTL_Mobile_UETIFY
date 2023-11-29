@@ -87,4 +87,8 @@ class PlaylistViewModel @Inject constructor(
     fun addSongToPlaylist(song: Music, playlist: Playlist) = viewModelScope.launch(dispatcher.main) {
         musicRepo.addSongToPlaylist(song, playlist)
     }
+
+    fun onMusicListItemPressed(music: Music) = viewModelScope.launch(dispatcher.main) {
+        musicUseCase.playPause(music.id)
+    }
 }

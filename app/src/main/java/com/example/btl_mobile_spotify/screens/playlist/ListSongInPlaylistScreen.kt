@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.btl_mobile_spotify.R
 import com.example.btl_mobile_spotify.components.IconBtn
 import com.example.btl_mobile_spotify.components.MusicItem
@@ -30,7 +31,7 @@ import com.example.btl_mobile_spotify.components.TopBar
 import com.example.btl_mobile_spotify.navigation.Router
 
 @Composable
-fun ListSongInPlaylistScreen(router: Router, viewModel: PlaylistViewModel) {
+fun ListSongInPlaylistScreen(router: Router, viewModel: PlaylistViewModel = hiltViewModel()) {
     val musicList = viewModel.uiState.value.currentMusicList
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
@@ -44,8 +45,7 @@ fun ListSongInPlaylistScreen(router: Router, viewModel: PlaylistViewModel) {
                 items(musicList) { music ->
                     MusicItem(
                         music = music,
-                        onItemClick = {
-
+                        onItemClick = {viewModel.onMusicListItemPressed(it)
                         })
                 }
             }
