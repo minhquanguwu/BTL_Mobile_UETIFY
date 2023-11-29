@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.btl_mobile_spotify.utils.MusicRecognition
 import com.example.btl_mobile_spotify.R
 import com.example.btl_mobile_spotify.screens.searchscreen.SearchViewModel
 import com.example.btl_mobile_spotify.ui.theme.BTL_Mobile_SpotifyTheme
@@ -47,11 +48,12 @@ fun SearchBar(
     val focusManager = LocalFocusManager.current
 
     val context = LocalContext.current
+    val musicRecognition = MusicRecognition(context)
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            //TODO: Record audio
+            musicRecognition.recognize()
         } else {
             Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
         }
@@ -90,7 +92,7 @@ fun SearchBar(
                                         context,
                                         Manifest.permission.RECORD_AUDIO
                                     ) -> {
-                                        //TODO: Record audio
+                                        musicRecognition.recognize()
                                     }
                                     else -> {
                                         launcher.launch(Manifest.permission.RECORD_AUDIO)
