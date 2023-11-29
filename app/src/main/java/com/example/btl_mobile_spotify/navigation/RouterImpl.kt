@@ -10,7 +10,7 @@ class RouterImpl(
     private val startDestination: String = ROUTE_HOME
 ) : Router  {
     override fun goHome() {
-        navigate(Screen.Home)
+        TODO("Not yet implemented")
     }
 
     override fun goAddToPlaylistScreen(arg: Any?) {
@@ -20,9 +20,14 @@ class RouterImpl(
     override fun goListSongInPlaylistScreen(arg: Any?) {
         navigate(Screen.ListSongInPlaylist)
     }
+    override fun goCategory(arg: Any?) {
+        navigate(Screen.Category, arg = arg)
+    }
+
     override fun goPlayerFull(arg: Any?) {
         navigate(Screen.PlayerFull)
     }
+
 
     override fun goProfileScreen(arg: Any?) {
         navigate(Screen.Profile)
@@ -31,10 +36,11 @@ class RouterImpl(
     private fun navigate(
         screen: Screen,
         removeFromHistory: Boolean = false,
-        singleTop: Boolean = false
+        singleTop: Boolean = false,
+        arg: Any? = null
     ) {
         navHostController.apply {
-            navigate(screen.route) {
+            navigate("${screen.route}/${arg}") {
                 if (removeFromHistory) {
                     if (singleTop) {
                         popUpTo(Screen.Home.route)
@@ -51,5 +57,4 @@ class RouterImpl(
             }
         }
     }
-
 }

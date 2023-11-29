@@ -16,6 +16,9 @@ interface MusicDao {
     @Query("SELECT * FROM music_table WHERE id = :id")
     suspend fun getSongById(id: String): Music
 
+    @Query("SELECT * FROM music_table WHERE genre = :genre")
+    fun getSongByGenre(genre: String): Flow<List<Music>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSong(songs: List<Music>)
 

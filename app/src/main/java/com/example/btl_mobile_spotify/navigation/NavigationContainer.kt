@@ -2,7 +2,6 @@ package com.example.btl_mobile_spotify.navigation
 
 import android.app.Activity
 import android.content.Context
-import android.support.v4.media.MediaMetadataCompat
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
@@ -31,6 +30,7 @@ import com.example.btl_mobile_spotify.screens.ProfileScreen
 import com.example.btl_mobile_spotify.screens.searchscreen.SearchScreen
 import com.example.btl_mobile_spotify.screens.SignUpScreen
 import com.example.btl_mobile_spotify.screens.SplashScreen
+import com.example.btl_mobile_spotify.screens.category.CategoryScreen
 import com.example.btl_mobile_spotify.screens.homescreen.HomeViewModel
 import com.example.btl_mobile_spotify.screens.playerfullscreen.MusicPlayerScreen
 import com.example.btl_mobile_spotify.screens.playlist.ListSongInPlaylistScreen
@@ -56,7 +56,7 @@ fun NavigationContainer(
     navController: NavHostController,
     paddingValues: PaddingValues,
     context: Context,
-    lifecycleScope: LifecycleCoroutineScope,
+    lifecycleScope: LifecycleCoroutineScope
 ) {
 
     val startDestination = remember { mutableStateOf(Screen.Splash.route) }
@@ -80,7 +80,10 @@ fun NavigationContainer(
             HomeScreen(paddingValues, router)
         }
         composable(Screen.Search.route) {
-            SearchScreen(paddingValues)
+            SearchScreen(router)
+        }
+        composable("${Screen.Category.route}/{genre}") { backStackEntry ->
+            CategoryScreen(backStackEntry.arguments?.getString("genre"))
         }
         composable(Screen.Libs.route) {
             LibsScreen(paddingValues, router)

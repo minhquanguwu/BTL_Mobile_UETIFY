@@ -6,4 +6,5 @@ interface Router {
     fun goProfileScreen(arg: Any?)
     fun goAddToPlaylistScreen(arg: Any?)
     fun goListSongInPlaylistScreen(arg: Any?)
+    fun goCategory(arg: Any?)
 }

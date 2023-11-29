@@ -14,6 +14,8 @@ class RoomMusicDataSource @Inject constructor(private val musicDao: MusicDao, pr
 
     suspend fun getSongById(id: String) = musicDao.getSongById(id)
 
+    fun getSongByGenre(genre: String) = musicDao.getSongByGenre(genre)
+
     suspend fun insertSong(songs: List<Music>) = musicDao.insertSong(songs)
 
     suspend fun deleteAllSongs() = musicDao.deleteAllSongs()
