@@ -3,6 +3,7 @@ package com.example.btl_mobile_spotify.screens.playerfullscreen
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
@@ -40,7 +41,14 @@ class MusicPlayerViewModel @Inject constructor(
 
     private val playbackState = musicUseCase.playbackState
     private val currentSong = musicUseCase.currentSong
+//    private val musicControlButtonState = MusicControlButtonState()
 
+    val _musicControlButtonState = mutableStateOf(
+        MusicControlButtonState()
+    )
+    val musicControlButtonState: State<MusicControlButtonState> = _musicControlButtonState
+    var isLoopAvailable = false
+//    var isLoopAvailable = mutableStateOf(false)
     init {
 //        setMusicControlButtonState()
         setMusicSliderState()
@@ -58,7 +66,8 @@ class MusicPlayerViewModel @Inject constructor(
     private fun getMusicControlButtonState() = MusicControlButtonState(
         onPlayPauseButtonClicked = this::onPlayPauseButtonPressed,
         onSkipNextButtonPressed = this::onNextTrackPressed,
-        onSkipPrevButtonPressed = this::onPrevTrackPressed
+        onSkipPrevButtonPressed = this::onPrevTrackPressed,
+        onLoopButtonPressed = this::onLoopTrackPressed,
     )
 
     private fun setMusicSliderState() = viewModelScope.launch {
@@ -75,6 +84,19 @@ class MusicPlayerViewModel @Inject constructor(
         )
         val seekTime = (value * uiState.value.totalDuration).toLong()
         musicUseCase.seekTo(seekTime)
+    }
+
+//    private fun onLoopTrackPressed() = viewModelScope.launch {
+//        if (musicControlButtonState.canLoop == true) musicControlButtonState.canLoop = false
+//        else musicControlButtonState.canLoop = true
+//        isLoopAvailable.value = musicControlButtonState.canLoop
+//    }
+
+    private fun onLoopTrackPressed() {
+        val currentState = _musicControlButtonState.value
+        val updatedState = currentState.copy(canLoop = !currentState.canLoop)
+        _musicControlButtonState.value = updatedState
+        isLoopAvailable = updatedState.canLoop
     }
 
     private fun onNextTrackPressed() = viewModelScope.launch {
@@ -98,17 +120,33 @@ class MusicPlayerViewModel @Inject constructor(
                     isPlaying = it.isPlaying,
                     musicControlButtonState = uiState.value.musicControlButtonState.copy(
                         isPlaying = it.isPlaying
+
                     )
                 )
             }
         }
     }
 
+//    private fun collectTimePassed() = viewModelScope.launch {
+//        musicUseCase.timePassed.collectLatest {
+//            updateDurationInUI(it, uiState.value.totalDuration)
+//        }
+//    }
     private fun collectTimePassed() = viewModelScope.launch {
-        musicUseCase.timePassed.collectLatest {
-            updateDurationInUI(it, uiState.value.totalDuration)
+        musicUseCase.timePassed.collectLatest { currentTime ->
+            val totalTime = uiState.value.totalDuration
+            val canLooped = _musicControlButtonState.value.canLoop
+
+            Log.d("SUCCESSSSSSS", "Current Time: $currentTime, Total Time: $totalTime, Bool: $canLooped")
+            updateDurationInUI(currentTime, totalTime)
+
+            if (currentTime > totalTime-1000 && canLooped == true) {
+                musicUseCase.skipToPrevTrack()
+                isLoopAvailable = canLooped
+            }
         }
     }
+
 
     private fun collectSongs() = viewModelScope.launch {
         songs.collectLatest {
